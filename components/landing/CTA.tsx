@@ -45,7 +45,7 @@ function CTA() {
       <div
         className={cn(
             "relative overflow-hidden rounded-2xl",
-            "bg-neutral-50 dark:bg-neutral-900",
+            "bg-neutral-50 dark:bg-neutral-950",
             "border border-neutral-200/60 dark:border-neutral-800/60",
             "shadow-[0px_0px_0px_1px_rgba(0,0,0,0.04),0px_2px_4px_rgba(0,0,0,0.04),0px_8px_16px_-4px_rgba(0,0,0,0.06),0px_24px_40px_-8px_rgba(0,0,0,0.08)]",
             "dark:shadow-[0px_0px_0px_1px_rgba(255,255,255,0.04),0px_8px_32px_-4px_rgba(0,0,0,0.4)]",

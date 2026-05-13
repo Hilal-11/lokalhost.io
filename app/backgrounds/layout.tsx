@@ -5,15 +5,17 @@ import type { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className=''> 
+ 
           <DocsLayout tabMode='auto' tree={backgroundsource.pageTree}
             {...baseOptions}
-            sidebar={{
+             sidebar={{
               defaultOpenLevel: 1,
+              className: "bg-white dark:bg-black border-r border-border",
             }}
           >
              {children}
           </DocsLayout>
-        </div>
+
   );
 }
+

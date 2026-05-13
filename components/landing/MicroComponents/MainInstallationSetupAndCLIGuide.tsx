@@ -463,24 +463,15 @@ export function CopyCommandButton({ registryUrl }: CopyCommandButtonProps) {
             style={{ transformOrigin: 'bottom right' }}
             className={cn(
               'absolute bottom-[calc(100%+8px)] right-0 z-50',
-              'w-[200px]',
-              'rounded-xl overflow-hidden',
-              'border border-neutral-200 dark:border-neutral-800',
+              'w-[160px]',
+              'overflow-hidden',
               'bg-white dark:bg-neutral-900',
               'shadow-[0_4px_24px_rgba(0,0,0,0.10),0_1px_4px_rgba(0,0,0,0.06)]',
-              'dark:shadow-[0_4px_32px_rgba(0,0,0,0.6)]',
+              'dark:shadow-[0_4px_32px_rgba(0,0,0,0.6)] rounded-lg border border-dashed',
             )}
           >
-            {/* Header */}
-            <div className='flex items-center justify-between px-3 pt-2.5 pb-2 border-b border-neutral-100 dark:border-neutral-800'>
-              <span className='text-[10px] font-semibold uppercase tracking-widest text-neutral-400 dark:text-neutral-600'>
-                Copy as
-              </span>
-              <FiCopy className='text-[10px] text-neutral-300 dark:text-neutral-700' />
-            </div>
-
             {/* Options */}
-            <div className='p-1.5 flex flex-col gap-0.5'>
+            <div className='flex flex-col gap-0.5 py-2 px-2'>
               {PACKAGE_MANAGERS.map((pm, i) => (
                 <motion.button
                   key={pm.id}
@@ -489,9 +480,9 @@ export function CopyCommandButton({ registryUrl }: CopyCommandButtonProps) {
                   transition={{ delay: i * 0.04, duration: 0.15 }}
                   onClick={() => handleCopy(pm)}
                   className={cn(
-                    'z-50 w-full flex items-center gap-2.5 px-2.5 py-1 rounded-sm',
+                    'z-50 w-full flex items-center gap-2.5 px-2.5 py-1 rounded-sm hover:border',
                     'text-left transition-all duration-100 group cursor-pointer',
-                    'hover:bg-neutral-100 hover:shadow-sm dark:hover:bg-neutral-800',
+                    'hover:bg-neutral-100/20 hover:shadow-sm dark:hover:bg-neutral-800',
                     copied === pm.id && 'bg-emerald-50 dark:bg-emerald-950/40'
                   )}
                 >

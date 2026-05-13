@@ -14,6 +14,7 @@ interface Services {
     about: string
     icon: IconType,
     link: string
+    comingSoon: boolean
 
 }
 export const services: Services[]  = [
@@ -22,62 +23,69 @@ export const services: Services[]  = [
     service: "Components",
     about: "Plug-and-play components for faster, cleaner development.",
     icon: GrCubes,
-    link: "/docs"
+    link: "/docs",
+    comingSoon: false
   },
   {
     id: 2,
     service: "Web Templates",
     about: "Production-ready templates with modern, top-tier code.",
     icon: MdViewQuilt,
-    link: "/templates"
+    link: "/templates",
+    comingSoon: false,
   },
   {
     id: 3,
     service: "Application Templates",
     about: "Full-scale app starters built with industry best practices.",
     icon: IoPhonePortraitOutline,
-    link: "/mobile"
+    link: "/mobile",
+    comingSoon: true,
+
   },
   {
     id: 7,
     service: "Backgrounds",
     about: "Modern patterns and sections, ready to plug in.",
     icon: TbBackground,
-    link: "/backgrounds"
+    link: "/backgrounds",
+    comingSoon: false,
+
   },
   {
     id: 9,
     service: "Figma Kits",
     about: "Complete design systems for fast UI/UX creation.",
     icon: LuFigma,
-    link: "/designs"
+    link: "/designs",
+    comingSoon: true,
+
   },
   {
     id: 4,
     service: "Mobile UI Elements",
     about: "Beautiful, reusable UI components for mobile apps.",
     icon: PiCubeDuotone,
-    link: "/mobile"
-  },
-  {
-    id: 5,
-    service: "Authentication Kits",
-    about: "JWT, OAuth, and social login solutions, ready instantly.",
-    icon: TbBrandAuth0,
-    link: "/authdocs"
+    link: "/mobile",
+    comingSoon: true,
+
   },
   {
     id: 6,
     service: "SASS Starter Kits",
     about: "Complete backend, APIs, and scalable architecture included.",
     icon: LiaIconsSolid,
-    link: "/"
+    link: "/",
+    comingSoon: true,
+
   },
   {
     id: 11,
     service: "Custom Request",
     about: "Got a unique idea? Let's build it together.",
     icon: RiTeamFill,
-    link: "/custom-work"
+    link: "/custom-work",
+    comingSoon: false,
+
   }
 ];

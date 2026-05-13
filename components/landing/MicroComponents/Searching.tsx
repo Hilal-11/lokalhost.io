@@ -12,6 +12,11 @@ import { RxCross2 } from 'react-icons/rx'
 import { MAIN_PAGE_SEARCHING_CONFIG } from '../../../config/searchingConfig'
 import NProgress from 'nprogress'
 
+
+// import { SearchingMain } from "../components/landing/MicroComponents/Searching"
+
+
+
 export function SearchingMain() {
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredItems, setFilteredItems] = useState([...MAIN_PAGE_SEARCHING_CONFIG])
@@ -19,6 +24,7 @@ export function SearchingMain() {
   const [focused, setFocused] = useState(false)
    const [activeIdx, setActiveIdx] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
+
 
   const handleSearching = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
@@ -63,13 +69,14 @@ export function SearchingMain() {
       {/* ── Trigger button ── */}
     <DialogTrigger asChild>
         <motion.button
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.96 }}
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
-          className="group flex items-center justify-between gap-1.5 bg-neutral-50 dark:bg-neutral-900 w-28 lg:w-44 px-1 h-8 rounded-sm shadow-sm border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors duration-200"
+          className="group flex items-center justify-between gap-1.5 bg-neutral-50 dark:bg-neutral-900 w-28 lg:w-44 px-1 h-8 rounded-sm shadow-sm border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors duration-200"
         >
           <div className="flex items-center gap-1">
-            <IoSearchSharp className="text-[15px] text-neutral-500 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors duration-200" />
+            {/* <IoSearchSharp className="text-[15px] text-neutral-500 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors duration-200" /> */}
+            <kbd className=" text-[14px] font-mono text-neutral-400 dark:text-neutral-600 border border-neutral-200 dark:border-neutral-700 rounded px-1 py-1 bg-white dark:bg-neutral-950">
+             <IoSearchSharp />
+          </kbd>
             <span className="text-xs text-neutral-400 dark:text-neutral-500">Search</span>
           </div>
           <kbd className="ml-1 text-[10px] font-mono text-neutral-400 dark:text-neutral-600 border border-neutral-200 dark:border-neutral-700 rounded px-1 py-px bg-white dark:bg-neutral-950">
@@ -138,11 +145,11 @@ export function SearchingMain() {
           {/* section label */}
           <motion.p
             layout
-            className="text-[11px] font-mono font-semibold text-neutral-400 dark:text-neutral-600 px-2 pt-1 pb-2 uppercase tracking-wider"
+            className="text-[12px] font-sans font-semibold text-neutral-600 dark:text-neutral-600 px-2 pt-1 pb-1 tracking-wider"
           >
             {isFiltering
               ? `${filteredItems.length} result${filteredItems.length !== 1 ? 's' : ''} for "${searchQuery}"`
-              : 'Suggestions'}
+              : 'Pages'}
           </motion.p>
 
           {/* no results */}
@@ -154,7 +161,7 @@ export function SearchingMain() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.2 }}
-                className="flex flex-col items-center justify-center py-12 gap-3"
+                className="flex flex-col items-center justify-center py-12 gap-1"
               >
                 <motion.div
                   animate={{ rotate: [0, -10, 10, -10, 0] }}
@@ -168,7 +175,7 @@ export function SearchingMain() {
                 </p>
               </motion.div>
             ) : (
-              <motion.div key="results" className="flex flex-col gap-0.5">
+              <motion.div key="results" className="flex flex-col gap-px">
                 {displayItems.map(({ suggesstion, suggesstion_to, Icon }: any, i: number) => (
                   <motion.div
                     key={suggesstion_to}
@@ -180,7 +187,7 @@ export function SearchingMain() {
                       onClick={handleLinkClick}
                       prefetch={true}
                       href={suggesstion_to}
-                      className="group/item flex items-center gap-3 w-full px-2 py-2.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800/80 transition-colors duration-150 relative overflow-hidden"
+                      className="group/item flex items-center gap-3 w-full px-2 py-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800/80 transition-colors duration-150 relative overflow-hidden"
                     >
                       {/* hover bg sweep */}
                       <motion.span
@@ -190,7 +197,7 @@ export function SearchingMain() {
                       {/* icon box */}
                       <motion.span
                         whileHover={{ scale: 1.1 }}
-                        className="relative z-10 flex items-center justify-center w-7 h-7 rounded-md bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 group-hover/item:border-neutral-300 dark:group-hover/item:border-neutral-600 transition-colors duration-150 flex-shrink-0"
+                        className="relative z-10 flex items-center justify-center w-6 h-6 rounded-md bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 group-hover/item:border-neutral-300 dark:group-hover/item:border-neutral-600 transition-colors duration-150 flex-shrink-0"
                       >
                         <Icon className="text-sm" />
                       </motion.span>
@@ -221,7 +228,6 @@ export function SearchingMain() {
         <div className="sticky bottom-0 border-t border-neutral-100 dark:border-neutral-800 bg-white dark:bg-neutral-950 px-4 py-2 flex items-center gap-3">
           {[
             { key: '↑↓', label: 'navigate' },
-            { key: '↵',  label: 'select' },
             { key: 'ESC', label: 'close' },
           ].map(({ key, label }) => (
             <span key={key} className="flex items-center gap-1 text-[10px] font-sans text-neutral-400 dark:text-neutral-600">

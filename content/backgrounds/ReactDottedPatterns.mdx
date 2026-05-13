@@ -3,298 +3,63 @@ title: "React Dot Pattern Background"
 description: "Interactive dot matrix with mouse-reactive glow effects and ambient wave animation, rendered on canvas for smooth performance."
 icon: Grip
 ---
-# React Dot Pattern Background
 
-Interactive dot matrix with mouse-reactive glow effects and ambient wave animation, rendered on canvas for smooth performance.
-
-# CLI Installation
-```tsx
-npx shadcn@latest add @lokalhost/background-patterns
-```
-
-import { DotPattern } from "@/components/BackgroundPatterns/dot-patterns";
+import { StripedPattern } from "@/components/BackgroundPatterns/dot-patterns";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Preview } from "@/components/mdx/preview";
 
 
-<Tabs items={["Component Preview", "Manual Code"]}>
-  <Tab value="Component Preview">
-    <Preview link="BackgroundPatterns/dot-pattern">
-      <DotPattern />
-    </Preview>
-  </Tab>
-  <Tab value="Manual Code">
-```tsx
-    "use client"
-
-import { useCallback, useEffect, useMemo, useRef } from "react"
-import { useTheme } from "next-themes"
+<Preview link="BackgroundPatterns/dot-pattern" isBlock={true} language="tsx" code={`
+import React, { useId } from "react"
 import { cn } from "@/lib/utils"
-
-export interface DotPatternProps {
-  className?: string
-  children?: React.ReactNode
-  dotSize?: number
-  gap?: number
-  /** Dark theme base dot color (hex) */
-  darkBaseColor?: string
-  /** Light theme base dot color (hex) */
-  lightBaseColor?: string
-  /** Dark theme glow color (hex) */
-  darkGlowColor?: string
-  /** Light theme glow color (hex) */
-  lightGlowColor?: string
-  /** Dark theme background color */
-  darkBgColor?: string
-  /** Light theme background color */
-  lightBgColor?: string
-  proximity?: number
-  glowIntensity?: number
-  waveSpeed?: number
+interface StripedPatternProps extends React.SVGProps<SVGSVGElement> {
+  direction?: "left" | "right"
 }
-
-function hexToRgb(hex: string): { r: number; g: number; b: number } {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-  return result
-    ? {
-        r: Number.parseInt(result[1], 16),
-        g: Number.parseInt(result[2], 16),
-        b: Number.parseInt(result[3], 16),
-      }
-    : { r: 0, g: 0, b: 0 }
-}
-
-interface Dot {
-  x: number
-  y: number
-  baseOpacity: number
-}
-
-export function DotPattern({
+export function StripedPattern({
+  direction = "left",
   className,
-  children,
-  dotSize = 2,
-  gap = 24,
-  // Dark theme defaults
-  darkBaseColor = "#404040",
-  darkGlowColor = "#22d3ee",
-  darkBgColor = "#0a0a0a",
-  // Light theme defaults
-  lightBaseColor = "#c0c0c0",
-  lightGlowColor = "#6366f1",
-  lightBgColor = "#ffffff",
-  proximity = 120,
-  glowIntensity = 1,
-  waveSpeed = 0.5,
-}: DotPatternProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const dotsRef = useRef<Dot[]>([])
-  const mouseRef = useRef({ x: -1000, y: -1000 })
-  const animationRef = useRef<number>()
-  const startTimeRef = useRef(Date.now())
-
-  const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme === "dark"
-
-  // Dynamically pick colors based on theme
-  const baseColor = isDark ? darkBaseColor : lightBaseColor
-  const glowColor = isDark ? darkGlowColor : lightGlowColor
-  const bgColor = isDark ? darkBgColor : lightBgColor
-
-  const baseRgb = useMemo(() => hexToRgb(baseColor), [baseColor])
-  const glowRgb = useMemo(() => hexToRgb(glowColor), [glowColor])
-  const bgRgb = useMemo(() => hexToRgb(bgColor), [bgColor])
-
-  const buildGrid = useCallback(() => {
-    const canvas = canvasRef.current
-    const container = containerRef.current
-    if (!canvas || !container) return
-
-    const rect = container.getBoundingClientRect()
-    const dpr = window.devicePixelRatio || 1
-
-    canvas.width = rect.width * dpr
-    canvas.height = rect.height * dpr
-    canvas.style.width = `${rect.width}px`
-    canvas.style.height = `${rect.height}px`
-
-    const ctx = canvas.getContext("2d")
-    if (ctx) ctx.scale(dpr, dpr)
-
-    const cellSize = dotSize + gap
-    const cols = Math.ceil(rect.width / cellSize) + 1
-    const rows = Math.ceil(rect.height / cellSize) + 1
-
-    const offsetX = (rect.width - (cols - 1) * cellSize) / 2
-    const offsetY = (rect.height - (rows - 1) * cellSize) / 2
-
-    const dots: Dot[] = []
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        dots.push({
-          x: offsetX + col * cellSize,
-          y: offsetY + row * cellSize,
-          baseOpacity: 0.3 + Math.random() * 0.2,
-        })
-      }
-    }
-    dotsRef.current = dots
-  }, [dotSize, gap])
-
-  const draw = useCallback(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-
-    const dpr = window.devicePixelRatio || 1
-    const width = canvas.width / dpr
-    const height = canvas.height / dpr
-
-    // Fill background with theme color
-    ctx.clearRect(0, 0, width, height)
-    ctx.fillStyle = `rgb(${bgRgb.r}, ${bgRgb.g}, ${bgRgb.b})`
-    ctx.fillRect(0, 0, width, height)
-
-    const { x: mx, y: my } = mouseRef.current
-    const proxSq = proximity * proximity
-    const time = (Date.now() - startTimeRef.current) * 0.001 * waveSpeed
-
-    for (const dot of dotsRef.current) {
-      const dx = dot.x - mx
-      const dy = dot.y - my
-      const distSq = dx * dx + dy * dy
-
-      // Wave animation
-      const wave = Math.sin(dot.x * 0.02 + dot.y * 0.02 + time) * 0.5 + 0.5
-      const waveOpacity = dot.baseOpacity + wave * 0.15
-      const waveScale = 1 + wave * 0.2
-
-      let opacity = waveOpacity
-      let scale = waveScale
-      let r = baseRgb.r
-      let g = baseRgb.g
-      let b = baseRgb.b
-      let glow = 0
-
-      // Mouse proximity effect
-      if (distSq < proxSq) {
-        const dist = Math.sqrt(distSq)
-        const t = 1 - dist / proximity
-        const easedT = t * t * (3 - 2 * t)
-
-        r = Math.round(baseRgb.r + (glowRgb.r - baseRgb.r) * easedT)
-        g = Math.round(baseRgb.g + (glowRgb.g - baseRgb.g) * easedT)
-        b = Math.round(baseRgb.b + (glowRgb.b - baseRgb.b) * easedT)
-
-        opacity = Math.min(1, waveOpacity + easedT * 0.7)
-        scale = waveScale + easedT * 0.8
-        glow = easedT * glowIntensity
-      }
-
-      const radius = (dotSize / 2) * scale
-
-      // Draw glow
-      if (glow > 0) {
-        const gradient = ctx.createRadialGradient(dot.x, dot.y, 0, dot.x, dot.y, radius * 4)
-        gradient.addColorStop(0, `rgba(${glowRgb.r}, ${glowRgb.g}, ${glowRgb.b}, ${glow * 0.4})`)
-        gradient.addColorStop(0.5, `rgba(${glowRgb.r}, ${glowRgb.g}, ${glowRgb.b}, ${glow * 0.1})`)
-        gradient.addColorStop(1, `rgba(${glowRgb.r}, ${glowRgb.g}, ${glowRgb.b}, 0)`)
-        ctx.beginPath()
-        ctx.arc(dot.x, dot.y, radius * 4, 0, Math.PI * 2)
-        ctx.fillStyle = gradient
-        ctx.fill()
-      }
-
-      // Draw dot
-      ctx.beginPath()
-      ctx.arc(dot.x, dot.y, radius, 0, Math.PI * 2)
-      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${opacity})`
-      ctx.fill()
-    }
-
-    animationRef.current = requestAnimationFrame(draw)
-  }, [proximity, baseRgb, glowRgb, bgRgb, dotSize, glowIntensity, waveSpeed])
-
-  // Rebuild grid when theme changes
-  useEffect(() => {
-    buildGrid()
-
-    const container = containerRef.current
-    if (!container) return
-
-    const ro = new ResizeObserver(buildGrid)
-    ro.observe(container)
-
-    return () => ro.disconnect()
-  }, [buildGrid, isDark])
-
-  useEffect(() => {
-    animationRef.current = requestAnimationFrame(draw)
-    return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current)
-    }
-  }, [draw])
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const canvas = canvasRef.current
-      if (!canvas) return
-      const rect = canvas.getBoundingClientRect()
-      mouseRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      }
-    }
-
-    const handleMouseLeave = () => {
-      mouseRef.current = { x: -1000, y: -1000 }
-    }
-
-    const container = containerRef.current
-    if (container) {
-      container.addEventListener("mousemove", handleMouseMove)
-      container.addEventListener("mouseleave", handleMouseLeave)
-    }
-
-    return () => {
-      if (container) {
-        container.removeEventListener("mousemove", handleMouseMove)
-        container.removeEventListener("mouseleave", handleMouseLeave)
-      }
-    }
-  }, [])
-
+  width = 10,
+  height = 10,
+  ...props
+}: StripedPatternProps) {
+  const id = useId()
+  const w = Number(width)
+  const h = Number(height)
   return (
-    <div
-      ref={containerRef}
-      className={cn("absolute inset-0 overflow-hidden", className)}
-      style={{ backgroundColor: bgColor }}
+    <svg
+      aria-hidden="true"
+      className={cn(
+        "pointer-events-none absolute z-10 h-[100%] w-[100%] stroke-[0.5] inset-0",
+        className
+      )}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-
-      {/* Vignette - dark has dark vignette, light has light vignette */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background: isDark
-            ? "radial-gradient(ellipse at center, transparent 0%, transparent 40%, rgba(10,10,10,0.6) 100%)"
-            : "radial-gradient(ellipse at center, transparent 0%, transparent 40%, rgba(255,255,255,0.6) 100%)",
-        }}
-      />
-
-      {/* Content layer */}
-      {children && <div className="relative z-10 h-full w-full">{children}</div>}
-    </div>
+      <defs>
+        <pattern id={id} width={w} height={h} patternUnits="userSpaceOnUse">
+          {direction === "left" ? (
+            <>
+              <line x1="0" y1={h} x2={w} y2="0" stroke="currentColor" />
+              <line x1={-w} y1={h} x2="0" y2="0" stroke="currentColor" />
+              <line x1={w} y1={h} x2={w * 2} y2="0" stroke="currentColor" />
+            </>
+          ) : (
+            <>
+              <line x1="0" y1="0" x2={w} y2={h} stroke="currentColor" />
+              <line x1={-w} y1="0" x2="0" y2={h} stroke="currentColor" />
+              <line x1={w} y1="0" x2={w * 2} y2={h} stroke="currentColor" />
+            </>
+          )}
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill={url(#{id}} />
+    </svg>
   )
 }
+`}>
+  <StripedPattern />
+</Preview>
 
-
-```
-  </Tab>
-</Tabs>
 ## Usage
 
 ### Default (Auto Dark/Light)

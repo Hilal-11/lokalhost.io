@@ -24,7 +24,7 @@ const CENTERED_COMPONENTS = [
     // Add more small components here
 ];
 
-// const FULL_WIDTH_COMPONENTS = ["hero"];
+const FULL_WIDTH_COMPONENTS = ["hero"];
 
 export default async function PreviewPage({
     params,
@@ -47,6 +47,11 @@ export default async function PreviewPage({
 
         // Check if component should be centered
         const shouldCenter = CENTERED_COMPONENTS.some((component) =>
+            componentName.startsWith(component)
+        );
+
+        // Check if component should be full width
+        const shouldFullWidth = FULL_WIDTH_COMPONENTS.some((component) =>
             componentName.startsWith(component)
         );
 

@@ -23,7 +23,7 @@ import Feedback from "@/components/landing/MicroComponents/Feedback";
 import { SearchingMain } from '../components/landing/MicroComponents/Searching';
 import headerPagesConfig from "@/public/config/HeaderPages.json"
 import { HiArrowNarrowRight } from "react-icons/hi";
-
+import { SoonV1 , ComingSoon , SoonV2, SoonV3 } from "@/components/landing/MicroComponents/ComingSoon";
 interface HeaderClientProps {
   isLoggedIn: boolean;
   user: string | null;
@@ -99,7 +99,7 @@ function Header({ isLoggedIn, user, userEmail }: HeaderClientProps) {
                             border-neutral-200 dark:border-neutral-800">
             <div
               className={`
-                            w-full md:w-[100%] lg:w-[90%] xl:w-[80%] mx-auto
+                            w-full md:w-[100%] lg:w-[90%] xl:w-[90%] mx-auto
                             flex items-center justify-between
                             px-4 py-4
                             relative
@@ -109,11 +109,9 @@ function Header({ isLoggedIn, user, userEmail }: HeaderClientProps) {
               <div className="relative z-10 flex items-center justify-between w-full gap-2">
                 {/* Logo Section with Navigation Links */}
                 <div className="flex items-center gap-6">
-                  <Link prefetch={true} href="/" onClick={handleLinkClick} className="flex items-center gap-2">
-                   <PiTerminalFill className="mr-2 h-8 w-8" />
-                   
-                   
-                    <span className="hidden sm:block font-sans font-bold text-lg">
+                  <Link prefetch={true} href="/" onClick={handleLinkClick} className="flex items-center">
+                   <PiTerminalFill className="h-8 w-8" />
+                    <span className="hidden sm:block font-sans font-bold text-xl">
                       Lokalhost.io
                     </span>
                   </Link>
@@ -133,15 +131,16 @@ function Header({ isLoggedIn, user, userEmail }: HeaderClientProps) {
                         
                         <div className="grid grid-cols-3 gap-3 w-full h-auto justify-evenly py-4 px-4">
                          {
-                          services.map(({ id, service, icon: Icon, link, about }) => (
+                          services.map(({ id, service, icon: Icon, link, about, comingSoon }) => (
                             <Link onClick={handleLinkClick} key={id} href={link} prefetch={true}>
                               <div className="h-auto py-2 cursor-pointer flex items-center hover:bg-neutral-100 hover:dark:bg-neutral-950 hover:rounded-sm">
                                 <div className="flex justify-center items-center px-5 h-full overflow-hidden relative">
                                   <span className="text-xl z-30"><Icon/></span>
                                 </div>
-                                <div className="space-y-0">
+                                <div className="space-y-0 relative">
                                   <h1 className="text-sm font-sans font-medium">{service}</h1>
                                   <p className="text-[10px] font-sans font-medium text-neutral-500">{about}</p>
+                                  { comingSoon && <div className="absolute right-2 -top-2"><SoonV3 /></div>}
                                 </div>
                               </div>
                             </Link>
@@ -191,7 +190,6 @@ function Header({ isLoggedIn, user, userEmail }: HeaderClientProps) {
                 <div className=" lg:block xl:block h-full relative left-2">
                   <div className="flex justify-end items-center gap-1">
                       <SearchingMain />
-                      <button className="bg-neutral-50 dark:bg-neutral-900 px-[7px] h-8 rounded-sm shadow-sm border hover:bg-neutral-100"><FaGithub className="text-[15px]"/></button>
                       <button onClick={() => setShowFeedback(prev => !prev)} className="flex items-center justify-center gap-2 text-xs border-t-[1px] border-l-[1px] border-r-[1px] border-neutral-950 dark:border-neutral-800 relative cursor-pointer font-sans font-medium px-4 h-8 pb-px rounded-md bg-gradient-to-t from-[#262626] to-[#525252] text-neutral-200 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]"><span className="text-sm"><MdOutlineFeedback /></span>Feedback</button>
                       {/*  feedback  */}
                       { showFeedback && <div ref={feedbackRef} onMouseDown={(e) => e.stopPropagation()} className="absolute inset-0 top-10"><Feedback /></div> }
@@ -218,7 +216,6 @@ function Header({ isLoggedIn, user, userEmail }: HeaderClientProps) {
                         <div>
                           <SearchingMain/>
                         </div>
-                        <button className="bg-neutral-50 dark:bg-neutral-900 px-[7px] py-[5px] rounded-sm shadow-sm border hover:bg-neutral-100"><FaGithub className="text-[16px]"/></button>
                     </div>
                   </div>
                    

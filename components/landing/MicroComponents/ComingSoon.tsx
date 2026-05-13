@@ -35,6 +35,24 @@ const styles = `
     background-clip: text;
     animation: shimmer 2.4s linear infinite;
   }
+
+  .soon-shimmer_v3 {
+    background: linear-gradient(90deg, #7e2a0c 25%, oklch(64.6% 0.222 41.116) 50%, oklch(50.5% 0.213 27.518) 75%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 2.4s linear infinite;
+  }
+  .dark .soon-shimmer_v3 {
+    background: linear-gradient(90deg, #7e2a0c 25%, oklch(64.6% 0.222 41.116) 50%, oklch(50.5% 0.213 27.518) 75%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 2.4s linear infinite;
+  }
+
 `;
 
 export function SoonV1() {
@@ -47,7 +65,16 @@ export function SoonV1() {
     </>
   );
 }
-
+export function SoonV3() {
+  return (
+    <>
+      <style>{styles}</style>
+      <span className="relative -right-2 -top-2.5 inline-flex items-center px-2 py-px rounded-md border border-orange-600 dark:border-orange-900 bg-white dark:bg-neutral-950 font-sans text-[6px] tracking-[0.2em] select-none">
+        <span className="soon-shimmer_v3 font-medium">Soon</span>
+      </span>
+    </>
+  );
+}
 export function SoonV2() {
   return (
     <>

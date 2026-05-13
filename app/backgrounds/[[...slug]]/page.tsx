@@ -18,20 +18,32 @@ export default async function Page(props: PageProps<'/backgrounds/[[...slug]]'>)
   const MDX = page.data.body;
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
-      <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription>{page.data.description}</DocsDescription>
-      <DocsBody>
-        <MDX
-          components={getMDXComponents({
-            // this allows you to link to other pages with relative file paths
-            a: createRelativeLink(backgroundsource, page),
-          })}
-        />
-      </DocsBody>
-    </DocsPage>
+    <div className="min-h-screen bg-white dark:bg-black">
+      <DocsPage toc={page.data.toc} full={page.data.full} 
+        container={{
+          className: "max-w-none lg:px-20",
+        }}
+        tableOfContent={{ enabled: false }}
+        tableOfContentPopover={{ enabled: false }}
+        >
+        <DocsTitle>{page.data.title}</DocsTitle>
+        <DocsDescription>{page.data.description}</DocsDescription>
+        <DocsBody
+          style={{ maxWidth: "none" }}
+          className="max-w-none lg:pr-20"
+        >
+          <MDX
+            components={getMDXComponents({
+              // this allows you to link to other pages with relative file paths
+              a: createRelativeLink(backgroundsource, page),
+            })}
+          />
+        </DocsBody>
+      </DocsPage>
+    </div>
   );
 }
+
 
 export async function generateStaticParams() {
   return backgroundsource.generateParams();

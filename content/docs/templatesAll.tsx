@@ -353,7 +353,7 @@ const TemplatesBlockList = () => {
       <div className="w-full">
 
         {/* ── Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 lg:px-10 py-5 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 py-5 gap-5">
           {TEMPLATES.map(({ component: Skeleton, label, tag }, index) => (
             <div
               key={index}

@@ -19,10 +19,10 @@ export default function Layout({ children }: { children: ReactNode }) {
       {...baseOptions}
       sidebar={{
         defaultOpenLevel: 1,
-        
+        className: "bg-white dark:bg-black border-r border-border",
       }}
     >
       {children}
-    </DocsLayout>
+  </DocsLayout>
   );
 }

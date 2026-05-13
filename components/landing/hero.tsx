@@ -114,11 +114,11 @@ const iconVariants: Variants = {
 
       <div className="w-full h-auto px-0 lg:px-4 py-6">
         <AnnoncementBadge aboutBadge={"Templates & Marketing UI Blocks, Mobile apps, UI design kits & more"}/>
-        <div className="mt-8 text-center flex-col gap-4">
-          <h1 className="font-sans font-bold text-2xl lg:text-5xl text-neutral-800 dark:text-neutral-200 pb-2">A Complete Ecosystem for Designing, Building, and Scaling Modern Web & Mobile Applications.</h1>
+        <div className="mt-8 text-center flex-col gap-4 lg:px-20">
+          <h1 className="font-sans font-bold text-2xl lg:text-[53px] text-neutral-800 dark:text-neutral-200 pb-2 leading-tight">A Complete Ecosystem for Designing, Building, and Scaling Modern Web & Mobile Applications.</h1>
           <ContainerTextFlip/>
           <p className={cn(
-          "font-sans font-medium text-[15px] lg:text-[16px] pt-4",
+          "font-sans font-medium text-[15px] lg:text-[16px] pt-8",
           "text-neutral-500 dark:text-neutral-400",
           "leading-relaxed max-w-2xl mx-auto",
           "px-4 lg:px-0"
@@ -343,7 +343,7 @@ const iconVariants: Variants = {
     </div>
 
         <MainInstallationSetupAndCLIGuide />
-        <div className="w-full h-auto mt-10 mb-10">
+        <div className="hidden lg:flex w-full h-auto mt-10 mb-10">
           <ScrollBasedTemplates/>
         </div>
         <ComponentsShowcase/>

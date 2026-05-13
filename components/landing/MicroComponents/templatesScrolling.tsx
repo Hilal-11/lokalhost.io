@@ -25,7 +25,7 @@ const ReviewCard = ({
     to?: string
 }) => {
   return (
-    <img alt="Error" src={image} className="w-auto h-[120px] lg:h-[178px] object-cover object-center rounded-sm border" />
+    <img alt="Error" src={image} className="w-auto lg:h-[178px] object-cover object-center rounded-sm border" />
   )
 }
 
@@ -121,24 +121,21 @@ export function TemplatesList() {
 }
 
 
-
-
-
 import { ScrollVelocityContainer , ScrollVelocityRow } from '@/components/ui/scroll-based-velocity'
 const IMAGES_ROW_A = templatesImages.slice(0, templatesImages.length / 2)
 const IMAGES_ROW_B = templatesImages.slice(0, templatesImages.length / 2)
 export function ScrollBasedTemplates() {
   return (
-    <div className="relative flex w-full flex-col gap-4 items-center justify-center overflow-hidden py-8">
+    <div className="relative flex w-full flex-col gap-4 items-center justify-center overflow-hidden">
       <ScrollVelocityContainer className="w-full flex flex-col gap-4 items-center justify-center overflow-hidden ">
         <ScrollVelocityRow baseVelocity={6} direction={1} className="flex gap-4">
           {IMAGES_ROW_A.map((src, idx) => (
-           <img key={idx} alt="Error" src={src.image} className="mx-3 w-auto h-[250px] object-cover object-center rounded-sm border" />
+           <img key={idx} alt="Error" src={src.image} className="w-full h-[200px] mx-3 object-cover object-center rounded-sm border" />
           ))}
         </ScrollVelocityRow>
         <ScrollVelocityRow baseVelocity={6} direction={-1} className="flex gap-4">
           {IMAGES_ROW_B.map((src, idx) => (
-            <img key={idx} alt="Error" src={src.image} className="mx-2 w-auto h-[250px] object-cover object-center rounded-sm border" />
+            <img key={idx} alt="Error" src={src.image} className="w-full h-[200px] mx-2 object-cover object-center rounded-sm border" />
           ))}
         </ScrollVelocityRow>
       </ScrollVelocityContainer>

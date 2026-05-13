@@ -20,7 +20,6 @@ import { FeedbackSchema } from "@/lib/definitions"
 import { toast, Toaster } from 'sonner'
 import { IoMdSend } from "react-icons/io"
 import { LuMessageSquare, LuBug, LuZap, LuPaintbrush, LuGauge, LuUser, LuFileText, LuLink, LuThumbsUp } from "react-icons/lu"
-import { TbHelpSquareRoundedFilled } from "react-icons/tb";
 /* ── topic config with icons ── */
 const TOPICS = [
   { value: "bug_report",          label: "Report a Bug",                  Icon: LuBug },
@@ -28,11 +27,8 @@ const TOPICS = [
   { value: "improvement",         label: "Improvement Suggestion",        Icon: LuThumbsUp },
   { value: "ui_ux_feedback",      label: "UI / UX Feedback",              Icon: LuPaintbrush },
   { value: "performance_issue",   label: "Performance Issue",             Icon: LuGauge },
-  { value: "account_issue",       label: "Account / Login Issue",         Icon: LuUser },
   { value: "content_issue",       label: "Content / Docs Issue",          Icon: LuFileText },
-  { value: "integration_problem", label: "Integration Problem",           Icon: LuLink },
   { value: "general_feedback",    label: "General Feedback",              Icon: LuMessageSquare },
-  { value: "other",               label: "Other",                         Icon: TbHelpSquareRoundedFilled },
 ]
 
 const MAX_CHARS = 400
@@ -91,15 +87,12 @@ function Feedback() {
     <>
       <Toaster position="top-right" />
       <motion.div
-        initial={{ opacity: 0, y: 24, scale: 0.97 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
-        <Card className="relative w-[340px] lg:w-[360px] overflow-hidden border border-neutral-200 dark:border-neutral-800 shadow-xl bg-white dark:bg-neutral-950">
+        <Card className="relative w-[340px] lg:w-[320px] overflow-hidden border border-neutral-300 dark:border-neutral-700 shadow-lg bg-white dark:bg-neutral-950">
 
           {/* ── animated top accent line ── */}
           <motion.div
-            className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neutral-400 dark:via-neutral-600 to-transparent"
+            className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-400 dark:via-orange-600 to-transparent"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -107,7 +100,7 @@ function Feedback() {
           />
 
           {/* ── Header ── */}
-          <CardHeader className="pb-3 pt-5 px-5">
+          <CardHeader className="px-5">
             {/* title row */}
             <motion.div
               initial={{ opacity: 0, x: -8 }}
@@ -115,21 +108,6 @@ function Feedback() {
               transition={{ duration: 0.4, delay: 0.1 }}
               className="flex items-center gap-2 mb-3"
             >
-              <motion.div
-                animate={{ rotate: [0, -8, 8, 0] }}
-                transition={{ duration: 3, repeat: Infinity, repeatDelay: 4 }}
-                className="flex items-center justify-center w-7 h-7 rounded-md bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400"
-              >
-                <LuMessageSquare className="text-sm" />
-              </motion.div>
-              <div>
-                <h2 className="text-sm font-sans font-bold text-neutral-800 dark:text-neutral-200 leading-none">
-                  Share Feedback
-                </h2>
-                <p className="text-[11px] font-sans text-neutral-400 dark:text-neutral-600 mt-0.5">
-                  Help us improve lokalhost.io
-                </p>
-              </div>
             </motion.div>
 
             {/* topic select */}
@@ -151,7 +129,7 @@ function Feedback() {
                           transition={{ duration: 0.15 }}
                           className="text-neutral-500 dark:text-neutral-400"
                         >
-                          <selectedTopic.Icon className="text-sm" />
+                          {/* <selectedTopic.Icon className="text-sm" /> */}
                         </motion.span>
                       ) : null}
                     </AnimatePresence>

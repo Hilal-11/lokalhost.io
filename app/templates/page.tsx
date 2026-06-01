@@ -36,6 +36,7 @@ import { LuLayoutTemplate } from 'react-icons/lu'
 import { SortTemplates } from "./sortTemplates";
 import CTA from "@/components/landing/CTA";
 import { usePathname } from "next/navigation";
+import { Highlighter } from "@/components/ui/highlighter"
 const techStackImages = [
     react,
     next,
@@ -169,7 +170,7 @@ function Templates(){
             router.push(`/login?redirect=${encodeURIComponent(pathname)}`); // ← fixed
             return;
         }
-        if (state.isLoggedIn === true) {
+        if (state.isLoggedIn) {
             e.stopPropagation();
             router.push(`/templates/template/${templeteId}`);
         };
@@ -180,180 +181,19 @@ function Templates(){
         <div className="relative w-full container max-w-[1580px]">
             <div className="container pt-14 w-full h-auto">
                 <AnnoncementBadge aboutBadge={"20 + Premium Templates and Designs by lokalhost.io"}/>
-                <div className="lg:pt-16 pt-8  w-full h-auto mx-auto">
-                    <div className="w-full mx-auto text-center lg:px-14">
-                        <h1 className="font-sans font-bold text-3xl lg:text-5xl text-neutral-800 dark:text-neutral-200">A high-quality collection of templates for React, Next.js, and modern web stacks, designed to ship faster.</h1>
-                        <p className="px-0 lg:w-2/3 mx-auto py-4 font-sans font-medium text-md text-neutral-600 dark:text-neutral-400">Discover a curated library of responsive templates and reusable components built for React, Next.js, and modern web technologies. Whether you're a freelancer, startup, or enterprise team.</p>
+                <div className="lg:pt-8 pt-8 w-full lg:w-6xl h-auto mx-auto">
+                    <div className="w-full lg:w-5xl mx-auto text-center lg:px-8">
+                        <h1 className="font-sans font-bold text-2xl lg:text-5xl text-neutral-800 dark:text-neutral-200">A high quality collection of templates, websites and Blocks for everyone.</h1>
                     </div>
                 </div>
                  <div className="flex flex-wrap justify-center items-center pt-3 pb-5 gap-3 lg:gap-6">
-                    <button className="border-1 border-orange-400 cursor-pointer px-8 py-[9px] rounded-lg text-sm font-sans font-medium text-neutral-800 bg-gradient-to-r from-[#F6D5F7] to-[#FBE9D7] shadow-sm flex items-center justify-center gap-2"><span><LuFigma /></span> Get Full Design Access</button>
-                    <button className="px-8 py-[10px] cursor-pointer border-t border-l border-r border-neutral-800 rounded-lg whitespace-nowrap font-sans font-medium text-sm text-neutral-200 dark:text-neutral-200 bg-gradient-to-t from-[#262626] to-[#525252] shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]">Get All Premium Templates</button>
+                    <button className="border-1 border-orange-400 cursor-pointer px-8 py-[9px] rounded-lg text-sm font-sans font-medium text-neutral-800 bg-gradient-to-r from-[#F6D5F7] to-[#FBE9D7] shadow-sm flex items-center justify-center gap-2"><span><LuFigma /></span> Get Full Access</button>
                 </div>
             </div>  
-            <section className="h-auto pt-4 mx-auto border border-dashed border-neutral-300 dark:border-neutral-700 mt-10 mb-10">
-                <div className="flex flex-wrap justify-between gap-2 items-center w-full pt-0 pb-4 border-b border-dashed border-neutral-300 dark:border-neutral-700 px-5">
+            <section className="h-auto pt-4 mx-auto mt-10 mb-10">
+                <div className="flex flex-wrap justify-between gap-2 items-center w-full pt-0 pb-4 ">
                     <SortTemplates />
                     <div className="flex lg:flex-nowrap flex-wrap items-center gap-1">
-                    <Dialog>
-                        <DialogTrigger asChild className='flex items-center justify-center'>
-                            <InputGroup className="flex items-center justify-center w-[34px] lg:w-full overflow-hidden">
-                                <InputGroupInput placeholder="Search Template:- " className="flex lg:flex md:flex"/>
-                                <InputGroupButton variant="secondary" className="relative right-3 lg:right-0 bg-transparent flex items-center justify-center"><IoMdSearch className="lg:text-lg text-xl mx-auto mr-px"/></InputGroupButton>
-                            </InputGroup>
-                        </DialogTrigger>
-
-                    <DialogContent className="p-0 gap-0 lg:w-[520px] max-h-[480px] overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800 shadow-2xl bg-white dark:bg-neutral-950">
-
-                        {/* ── Sticky search bar ── */}
-                        <div className={`sticky top-0 z-20 w-full bg-white dark:bg-neutral-950 border-b border-neutral-100 dark:border-neutral-800 transition-shadow duration-200 ${focused ? 'shadow-sm' : ''}`}>
-                        <div className="flex items-center gap-2 px-3 h-12">
-                            <motion.span
-                            animate={focused ? { scale: 1.1, color: "#525252" } : { scale: 1, color: "#a3a3a3" }}
-                            transition={{ duration: 0.2 }}
-                            >
-                            <IoSearchSharp className="text-lg flex-shrink-0" />
-                            </motion.span>
-
-                            <input
-                            ref={inputRef}
-                            value={searchQuery}
-                            onChange={e => setSearchQuery(e.target.value)}
-                            onFocus={() => setFocused(true)}
-                            onBlur={() => setFocused(false)}
-                            type="text"
-                            placeholder="Search templates by name…"
-                            className="flex-1 h-full outline-none text-sm font-sans font-medium bg-transparent text-neutral-800 dark:text-neutral-200 placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
-                            />
-
-                            <AnimatePresence>
-                            {searchQuery.length > 0 && (
-                                <motion.button
-                                initial={{ opacity: 0, scale: 0.7 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.7 }}
-                                transition={{ duration: 0.15 }}
-                                onClick={() => setSearchQuery('')}
-                                className="flex items-center justify-center w-5 h-5 rounded-full bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 transition-colors duration-150 flex-shrink-0"
-                                >
-                                <RxCross2 className="text-[10px] text-neutral-600 dark:text-neutral-300" />
-                                </motion.button>
-                            )}
-                            </AnimatePresence>
-
-                            <kbd className="hidden sm:flex items-center justify-center h-5 px-1.5 rounded border border-neutral-200 dark:border-neutral-700 text-[10px] font-mono text-neutral-400 dark:text-neutral-500 bg-neutral-50 dark:bg-neutral-900 flex-shrink-0">
-                            ESC
-                            </kbd>
-                        </div>
-
-                        {/* animated focus underline */}
-                        <motion.div
-                            className="absolute bottom-0 left-3 right-3 h-px bg-gradient-to-r from-transparent via-neutral-400 dark:via-neutral-500 to-transparent"
-                            initial={{ scaleX: 0, opacity: 0 }}
-                            animate={focused ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            style={{ originX: 0.5 }}
-                        />
-                        </div>
-
-                        {/* ── Results ── */}
-                        <div className="overflow-y-auto max-h-[380px] px-2 py-2 scroll-smooth">
-
-                        {/* label */}
-                        <p className="text-[11px] font-mono font-semibold text-neutral-400 dark:text-neutral-600 px-2 pt-1 pb-2 uppercase tracking-wider">
-                            {isFiltering
-                            ? `${filteredItems.length} template${filteredItems.length !== 1 ? 's' : ''} for "${searchQuery}"`
-                            : `All Templates — ${templates?.length ?? 0}`}
-                        </p>
-
-                        <AnimatePresence mode="wait">
-                            {/* no results */}
-                            {noResults ? (
-                            <motion.div
-                                key="no-results"
-                                initial={{ opacity: 0, y: 8 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -8 }}
-                                transition={{ duration: 0.2 }}
-                                className="flex flex-col items-center justify-center py-12 gap-3"
-                            >
-                                <motion.div
-                                animate={{ rotate: [0, -10, 10, -10, 0] }}
-                                transition={{ duration: 0.5 }}
-                                className="text-3xl text-neutral-300 dark:text-neutral-700"
-                                >
-                                <LuLayoutTemplate />
-                                </motion.div>
-                                <p className="text-sm font-sans font-medium text-neutral-400 dark:text-neutral-600">
-                                No templates matching{" "}
-                                <span className="text-neutral-600 dark:text-neutral-400">"{searchQuery}"</span>
-                                </p>
-                            </motion.div>
-                            ) : (
-                            <motion.div key="results" className="flex flex-col gap-0.5">
-                                {displayItems.map(({ id, projectName }, i) => (
-                                <motion.div
-                                    key={id}
-                                    initial={{ opacity: 0, x: -8 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.18, delay: i * 0.025 }}
-                                >
-                                    <Link
-                                    prefetch={true}
-                                    href={`#${id}`}
-                                    onClick={() => setOpen(false)}
-                                    className="group/item flex items-center gap-3 w-full px-2 py-2.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800/80 transition-colors duration-150 relative overflow-hidden"
-                                    >
-                                    {/* hover sweep */}
-                                    <span className="absolute inset-0 bg-gradient-to-r from-neutral-100/80 dark:from-neutral-800/80 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-200 rounded-lg" />
-
-                                    {/* icon box */}
-                                    <span className="relative z-10 flex items-center justify-center w-7 h-7 rounded-md bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-500 dark:text-neutral-400 group-hover/item:border-neutral-300 dark:group-hover/item:border-neutral-600 transition-colors duration-150 flex-shrink-0">
-                                        <RiCheckboxBlankCircleLine className="text-xs" />
-                                    </span>
-
-                                    {/* name + highlight */}
-                                    <span className="relative z-10 text-sm font-sans font-medium text-neutral-700 dark:text-neutral-300 group-hover/item:text-neutral-900 dark:group-hover/item:text-neutral-100 transition-colors duration-150 flex-1 truncate">
-                                        {isFiltering ? highlightMatch(projectName, searchQuery) : projectName}
-                                    </span>
-
-                                    {/* anchor badge */}
-                                    <span className="relative z-10 text-[10px] font-mono text-neutral-300 dark:text-neutral-700 opacity-0 group-hover/item:opacity-100 transition-opacity duration-150 flex-shrink-0">
-                                        #{id}
-                                    </span>
-
-                                    {/* arrow */}
-                                    <span className="relative z-10 text-xs text-neutral-400 dark:text-neutral-600 opacity-0 group-hover/item:opacity-100 -translate-x-1 group-hover/item:translate-x-0 transition-all duration-150 flex-shrink-0">
-                                        →
-                                    </span>
-                                    </Link>
-                                </motion.div>
-                                ))}
-                            </motion.div>
-                            )}
-                        </AnimatePresence>
-                        </div>
-
-                        {/* ── Footer ── */}
-                        <div className="sticky bottom-0 border-t border-neutral-100 dark:border-neutral-800 bg-white dark:bg-neutral-950 px-4 py-2 flex items-center gap-3">
-                        {[
-                            { key: '↑↓', label: 'navigate' },
-                            { key: '↵',  label: 'jump to' },
-                            { key: 'ESC', label: 'close' },
-                        ].map(({ key, label }) => (
-                            <span key={key} className="flex items-center gap-1 text-[10px] font-sans text-neutral-400 dark:text-neutral-600">
-                            <kbd className="px-1 py-0.5 rounded border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 font-mono text-[10px]">
-                                {key}
-                            </kbd>
-                            {label}
-                            </span>
-                        ))}
-                        <span className="ml-auto text-[10px] font-mono text-neutral-300 dark:text-neutral-700">
-                            {templates?.length ?? 0} templates
-                        </span>
-                        </div>
-                    </DialogContent>
-                    </Dialog>
                     <ButtonGroup>
                         <Button 
                             variant={activeFilter === 'All' ? 'default' : 'outline'}
@@ -379,94 +219,77 @@ function Templates(){
                     </ButtonGroup>
                     </div>
                 </div>     
-                { !templates ? (<TemplateShimmerLoadingUI/>) : (
-                    filteredTemplates?.map((templete) => (
-                        <div id={`${templete.id}`} key={templete.id} className="flex flex-col gap-4 w-full">
-                        <div className="w-full h-auto flex flex-wrap border-t border-dashed border-neutral-300 dark:border-neutral-700 r">
-                            <div className="xl:w-[30%] lg:w-[40%] md:w-[50%] px-6 border-r border-dashed border-neutral-300 dark:border-neutral-700 py-5 pb-5">
-                                <div className="flex flex-col gap-3">
-                                    <h1 className="font-sans font-bold text-3xl text-neutral-800 dark:text-neutral-200">{templete.projectName}</h1>
-                                    <p className="pt-2 text-sm font-sans font-medium text-neutral-600 dark:text-neutral-400">{templete.projectDescription}</p>
-                                </div>
-                                <div className="flex justify-between pt-4">
-                                    <button className="px-3 border border-dashed rounded-sm font-sans font-medium text-sm text-neutral-800 dark:text-neutral-200">
-                                        {new Date(templete?._creationTime).toLocaleDateString('en-US', {
-                                            year: 'numeric',
-                                            month: 'short',
-                                            day: 'numeric'
-                                        })}
-                                    </button>
-                                    <button className="px-4 py-2 cursor-pointer border-t border-l border-r border-neutral-800 rounded-lg whitespace-nowrap font-sans font-medium text-xs text-neutral-200 dark:text-neutral-200 bg-gradient-to-t from-[#262626] to-[#525252] shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]">{templete.projectPrize === "free" ? `Free` : `${templete.projectPrize !== "Free"? `$${templete.projectPrize}` : "Free"} `}</button>
-                                </div>
-                                <div className='pt-3 flex flex-wrap py-0 poppins-medium text-neutral-600 gap-1'>
-                                                        {techStackImages.map((image, index) => (
-                                                            <div key={index} className='rounded-sm p-[3px] cursor-pointer bg-neutral-50 dark:bg-neutral-800 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] flex items-center justify-center'>
-                                                                <Image
-                                                                    key={index}
-                                                                    src={image}
-                                                                    width={24}
-                                                                    height={24}
-                                                                    alt='Tech Image'
-                                                                    className='rounded-sm '
-                                                                />
-                                                            </div>
-                                                        ))}
-                                </div>
-                                <div className="flex w-full justify-start items-center pt-4">
-                                    <button onClick={(e) => handleOpen(e, templete._id)} className="px-8 py-[6px] cursor-pointer border-t border-l border-r border-neutral-800 rounded-lg whitespace-nowrap font-sans font-medium text-sm text-neutral-200 dark:text-neutral-200 bg-gradient-to-t from-[#262626] to-[#525252] shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)] flex gap-2 items-center">View Template <span className="text-lg"><HiArrowNarrowRight /></span> </button>
-                                </div>
-                                
-                            </div>
-                            <div onClick={(e) => handleOpen(e, templete._id)} className="cursor-pointer xl:w-[70%] lg:w-[60%] md:w-[50%] px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 mask-l-from-80% to-100% p-14 relative group transition duration-300">
-                                <div className="z-40 hidden absolute top-1 right-1 group-hover:block transition duration-300">
-                                    <HoverExternalIcon />
-                                </div>                        
-                                                        
-                                <div className="border rounded-lg shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)] flex items-center justify-center">
-                                  {templete.projectImages?.[0] && (
-                                     <Image 
-                                         src={templete.projectImages[0]}
-                                         alt="not load yet"
-                                         width={400}
-                                         height={500}
-                                         className="object-cover h-full rounded-t-md w-full"
-                                     />
-                                     
-                                 )}
-                                </div>
-                                <div className="border rounded-lg shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)] flex items-center justify-center">
-                                    {templete.projectImages?.[1] && (
-                                     
-                                     <Image 
-                                         src={templete.projectImages[1]}
-                                         alt="not load yet"
-                                         width={400}
-                                         height={500}
-                                         className="object-cover h-full rounded-t-md w-fulld"
-                                     />
-                                     
-                                 )}
-                                </div>
-                                <div className="border rounded-lg shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)] flex items-center justify-center">
-                                    {templete.projectImages?.[2] && (
-                                     
-                                     <Image 
-                                         src={templete.projectImages[2]}
-                                         alt="not load yet"
-                                         width={400}
-                                         height={500}
-                                         className="object-cover h-full rounded-t-md w-fulld"
-                                     />
-                                     
-                                 )}
-                                </div>
+                {!templates ? (
+  <TemplateShimmerLoadingUI />
+) : (
+  /* ── Outer container with subtle border + shadow wrap ── */
+  <div className="w-full bg-[#F9F9F9] dark:bg-black border rounded-[18px] p-4 lg:p-5">
 
-                            </div>
-                        </div>
-                    </div>
-                    ))
-                    
+    {/* ── Masonry grid ── */}
+    <div className="[columns:1] lg:[columns:2] md:[columns:2] lg:gap-16 md:gap-8 gap-8">
+
+      {filteredTemplates?.map((templete) => (
+        <div
+          key={templete.id}
+          className="[break-inside:avoid] mb-3 relative group cursor-pointer"
+          onClick={(e) => handleOpen(e, templete._id)}
+        >
+            
+          <div
+            className="mb-10 overflow-hidden relative p-4 lg:p-15 rounded-xl bg-white border dark:bg-neutral-950 transition-transform duration-200 hover:-translate-y-0.5 shadow-sm hover:mask-b-from-blue-500 hover:[mask-image:linear-gradient(to_bottom,blue_60%,transparent_95%)]"
+          >
+          <div className="min-w-0 relative lg:bottom-8 bottom-2">
+                <Highlighter action="underline" color="#FF9800">
+                    <h2 className="font-sans text-sm font-medium leading-tight tracking-normal text-neutral-800 dark:text-neutral-200 lg:text-xl">
+                        <span className="bg-gradient-to-r from-neutral-950 via-neutral-700 to-neutral-500 bg-clip-text text-transparent dark:from-white dark:via-neutral-200 dark:to-neutral-500">
+                        {highlightMatch(templete.projectName, searchQuery)}
+                        </span>
+                    </h2>
+                </Highlighter>
+            </div>
+            {/* ── Image fills fully, no fixed height ── */}
+            <div
+                className="relative z-20 w-full border rounded-xl overflow-hidden transition-transform duration-500 ease-out
+                group-hover:translate-x-[5.25rem] group-hover:translate-y-[4rem]
+                lg:group-hover:translate-x-[11.25rem] lg:group-hover:translate-y-[8.75rem]"
+            >
+                {templete.projectImages?.[0] && (
+                <Image
+                    src={templete.projectImages[0]}
+                    alt={templete.name ?? "Template preview"}
+                    width={400}
+                    height={800}
+                    className="rounded-xl w-full h-auto object-cover block"
+                />
                 )}
+            </div>
+
+            {/* Image 1 */}
+            {templete.projectImages?.[1] && (
+                <Image
+                src={templete.projectImages[1]}
+                alt={templete.name ?? "Template preview"}
+                width={400}
+                height={800}
+                className="border absolute z-20 top-30 -right-30 lg:top-50 lg:-right-60 rounded-xl w-full h-auto object-cover block transition-transform duration-500 ease-out
+                group-hover:-translate-x-[5.25rem] group-hover:-translate-y-[4rem]
+                lg:group-hover:-translate-x-[11.25rem] lg:group-hover:-translate-y-[8.75rem]"
+                />
+            )}
+           {/* ── External link icon top-right on hover ── */}
+              <div className="absolute top-2 right-2 w-[26px] h-[26px] bg-black text-white backdrop-blur-sm rounded-[7px] border border-black/[0.08] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-neutral-200">
+                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+                  <polyline points="15 3 21 3 21 9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+              </div>
+            </div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
             </section>
             <CTA />
         </div>

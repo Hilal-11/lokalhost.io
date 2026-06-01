@@ -256,7 +256,7 @@ function Templates(){
                 {templete.projectImages?.[0] && (
                 <Image
                     src={templete.projectImages[0]}
-                    alt={templete.name ?? "Template preview"}
+                    alt={"Template preview"}
                     width={400}
                     height={800}
                     className="rounded-xl w-full h-auto object-cover block"
@@ -268,7 +268,7 @@ function Templates(){
             {templete.projectImages?.[1] && (
                 <Image
                 src={templete.projectImages[1]}
-                alt={templete.name ?? "Template preview"}
+                alt={"Template preview"}
                 width={400}
                 height={800}
                 className="border absolute z-20 top-30 -right-30 lg:top-50 lg:-right-60 rounded-xl w-full h-auto object-cover block transition-transform duration-500 ease-out

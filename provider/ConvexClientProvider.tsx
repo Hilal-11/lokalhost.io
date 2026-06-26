@@ -30,13 +30,14 @@ export function ConvexClientProvider({ children }: { children: React.ReactNode }
     })
   );
 
-  return (
+return (
     <ConvexProvider client={convex}>
       <PersistQueryClientProvider 
-        client={queryClient} 
+       client={queryClient} 
         persistOptions={{ 
           persister,
           maxAge: 24 * 60 * 60 * 1000,
+          buster: 'v2', // 👈 bump this when you add new templates
         }}
       >
         {children}

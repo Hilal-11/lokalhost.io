@@ -250,8 +250,7 @@ function Templates(){
             {/* ── Image fills fully, no fixed height ── */}
             <div
                 className="relative z-20 w-full border rounded-xl overflow-hidden transition-transform duration-500 ease-out
-                group-hover:translate-x-[5.25rem] group-hover:translate-y-[4rem]
-                lg:group-hover:translate-x-[11.25rem] lg:group-hover:translate-y-[8.75rem]"
+                "
             >
                 {templete.projectImages?.[0] && (
                 <Image
@@ -271,9 +270,7 @@ function Templates(){
                 alt={"Template preview"}
                 width={400}
                 height={800}
-                className="border absolute z-20 top-30 -right-30 lg:top-50 lg:-right-60 rounded-xl w-full h-auto object-cover block transition-transform duration-500 ease-out
-                group-hover:-translate-x-[5.25rem] group-hover:-translate-y-[4rem]
-                lg:group-hover:-translate-x-[11.25rem] lg:group-hover:-translate-y-[8.75rem]"
+                className="border absolute z-20 top-30 -right-30 lg:top-50 lg:-right-60 rounded-xl w-full h-auto object-cover block transition-transform duration-500 ease-out"
                 />
             )}
            {/* ── External link icon top-right on hover ── */}

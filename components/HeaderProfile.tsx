@@ -12,23 +12,30 @@ import { toast, Toaster } from 'sonner'
 import { MdLogout } from "react-icons/md"
 import { LuLayoutDashboard, LuUser } from "react-icons/lu"
 import { RiMoonLine } from "react-icons/ri"
+import { createClient } from '@/lib/supabase/client'
+import type { User } from '@supabase/supabase-js'
+import { useUser } from '@/hooks/useUser'
 
 interface HeaderClientProps {
-  user: string | null;
-  userEmail: string | null;
-} 
-function HeaderProfile({ user, userEmail }: HeaderClientProps) {
-  const [open, setOpen]           = useState(false)
+  user: User
+}
+
+function HeaderProfile() {
+  const { user, loading }           = useUser()
+  const [open, setOpen]             = useState(false)
   const [loggingOut, setLoggingOut] = useState(false)
+
+  const displayName = user?.user_metadata?.full_name ?? user?.email ?? ''
+  const avatarUrl = user?.user_metadata?.avatar_url as string | undefined
+  const initials    = displayName.slice(0, 2).toUpperCase() || '?'
+  const email       = user?.email ?? ''
 
   const handleLogout = async () => {
     setLoggingOut(true)
     try {
-      const res = await fetch('/api/users/logout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      })
-      if (res.ok) {
+      const supabase = createClient()
+      const { error } = await supabase.auth.signOut()
+      if (!error) {
         window.location.href = '/'
       } else {
         toast.error('Logout failed')
@@ -40,8 +47,6 @@ function HeaderProfile({ user, userEmail }: HeaderClientProps) {
     }
   }
 
-  const initials = user?.slice(0, 2).toUpperCase() ?? '?'
-
   return (
     <div className="flex items-center">
       <Toaster position="top-right" />
@@ -49,24 +54,35 @@ function HeaderProfile({ user, userEmail }: HeaderClientProps) {
       <DropdownMenu open={open} onOpenChange={setOpen}>
 
         {/* ── Avatar trigger ── */}
-       <DropdownMenuTrigger asChild>
-        <motion.button
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.93 }}
-          transition={{ type: "spring", stiffness: 400, damping: 20 }}
-          className="group relative cursor-pointer flex items-center justify-center w-[28px] h-[28px] lg:w-[32px] lg:h-[32px] rounded-md overflow-hidden bg-gradient-to-t from-neutral-900 to-neutral-600 dark:from-neutral-100 dark:to-neutral-300 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.08),0px_2px_4px_rgba(0,0,0,0.12)] outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600"
-        >
-          <motion.span
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent"
-            initial={{ x: "-100%" }}
-            animate={{ x: open ? "100%" : "-100%" }}
-            transition={{ duration: 0.5 }}
-          />
-          <span className="relative z-10 text-[13px] font-bold font-sans text-white dark:text-black tracking-tight select-none">
-            {initials}
-          </span>
-        </motion.button>
-      </DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
+          <motion.button
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.93 }}
+            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+            className="group relative cursor-pointer flex items-center justify-center w-[28px] h-[28px] lg:w-[32px] lg:h-[32px] rounded-md overflow-hidden bg-gradient-to-t from-neutral-900 to-neutral-600 dark:from-neutral-100 dark:to-neutral-300 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.08),0px_2px_4px_rgba(0,0,0,0.12)] outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600"
+          >
+            <motion.span
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent"
+              initial={{ x: "-100%" }}
+              animate={{ x: open ? "100%" : "-100%" }}
+              transition={{ duration: 0.5 }}
+            />
+            <div className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-t from-neutral-900 to-neutral-600 dark:from-neutral-100 dark:to-neutral-300 shadow-sm overflow-hidden">
+            {avatarUrl ? (
+              <img
+                src={avatarUrl}
+                alt={initials}
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <span className="text-sm font-bold text-white dark:text-black select-none">
+                {initials}
+              </span>
+            )}
+          </div>
+          </motion.button>
+        </DropdownMenuTrigger>
 
         {/* ── Dropdown content ── */}
         <DropdownMenuContent
@@ -98,19 +114,27 @@ function HeaderProfile({ user, userEmail }: HeaderClientProps) {
                   transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                   className="px-4 pt-4 pb-3"
                 >
-                  {/* avatar + name row */}
                   <div className="flex items-center gap-3">
                     <div className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-t from-neutral-900 to-neutral-600 dark:from-neutral-100 dark:to-neutral-300 shadow-sm">
-                      <span className="text-sm font-bold text-white dark:text-black select-none">
-                        {initials}
-                      </span>
+                      {avatarUrl ? (
+                        <img
+                          src={avatarUrl}
+                          alt={initials}
+                          className="w-full h-full object-cover rounded-lg"
+                          referrerPolicy="no-referrer"
+                        />
+                      ) : (
+                        <span className="text-sm font-bold text-white dark:text-black select-none">
+                          {initials}
+                        </span>
+                      )}
                     </div>
                     <div className="min-w-0">
                       <p className="font-sans font-semibold text-sm text-neutral-800 dark:text-neutral-200 truncate leading-tight">
-                        {user}
+                        {displayName}
                       </p>
                       <p className="font-sans font-medium text-[11px] text-neutral-400 dark:text-neutral-500 truncate mt-0.5">
-                        {userEmail}
+                        {email}
                       </p>
                     </div>
                   </div>
@@ -139,9 +163,7 @@ function HeaderProfile({ user, userEmail }: HeaderClientProps) {
                       <span className="text-sm font-sans font-medium text-neutral-700 dark:text-neutral-300 group-hover/item:text-neutral-900 dark:group-hover/item:text-neutral-100 transition-colors duration-150">
                         {label}
                       </span>
-                      <motion.span
-                        className="ml-auto text-xs text-neutral-300 dark:text-neutral-700 opacity-0 group-hover/item:opacity-100 transition-opacity duration-150"
-                      >
+                      <motion.span className="ml-auto text-xs text-neutral-300 dark:text-neutral-700 opacity-0 group-hover/item:opacity-100 transition-opacity duration-150">
                         →
                       </motion.span>
                     </motion.a>
@@ -178,9 +200,7 @@ function HeaderProfile({ user, userEmail }: HeaderClientProps) {
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
                     className="relative w-full flex items-center justify-between px-3 py-2 rounded-lg border-t-[2px] border-l-[2px] border-r-[2px] border-neutral-900 dark:border-neutral-800 bg-gradient-to-t from-[#262626] to-[#525252] text-neutral-200 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_2px_4px_rgba(0,0,0,0.12)] overflow-hidden group/logout disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
                   >
-                    {/* shimmer */}
                     <motion.span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/logout:translate-x-full transition-transform duration-700" />
-
                     <span className="relative z-10 text-sm font-sans font-semibold">
                       {loggingOut ? 'Signing out…' : 'Sign out'}
                     </span>

@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import GoToTop from '@/components/GoToTop';
 import Providers from "./provider";
-import { FeedbackMobile } from "@/components/GoToTop";
-import Footer from "@/components/layout/footer";
 import TopLoader from '@/components/TopLoader'
-import Header from "./header";
-import { JsonLd } from "./jsonid";
 import { Analytics } from '@vercel/analytics/next';
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -212,14 +207,9 @@ export default async function RootLayout({
         className={`relative font-sans ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          <JsonLd />
-          <GoToTop />
-          <div className="lg:hidden md:hidden flex"><FeedbackMobile /></div>
           <TopLoader />
-          <Header />
           <Analytics />
           {children}
-          <Footer />
         </Providers>
       </body>
     </html>

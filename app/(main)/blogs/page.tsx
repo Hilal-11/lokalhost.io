@@ -1,10 +1,10 @@
 "use client"
+export const dynamic = 'force-dynamic'
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { IoMdSend } from 'react-icons/io';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
-
 function Page() {
   // Sample blog data - replace with your actual blog data
   const blogs = [

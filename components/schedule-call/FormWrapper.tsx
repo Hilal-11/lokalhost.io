@@ -14,7 +14,7 @@ import {
   stepFourSchema,
   type FullFormData,
 } from "@/lib/Schema";
-import { submitCustomWorkForm } from "@/app/actions/submit";
+import { submitCustomWorkForm } from "@/app/(main)/actions/submit";
 import { ProgressBar } from "./Progressbar";
 import { StepOne } from "./Stepone";
 import { StepTwo } from "./Steptwo";
@@ -31,7 +31,7 @@ interface Props {
   user?: { name?: string; email?: string } | null;
 }
 
-export function FormWrapper({ user }: Props) {
+export function FormWrapper() {
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -43,8 +43,8 @@ const saveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
     resolver: zodResolver(fullFormSchema),
     mode: "onChange",
     defaultValues: {
-      fullName: user?.name ?? "",   // ← pre-filled from JWT
-      email: user?.email ?? "",     // ← pre-filled from JWT
+      // fullName: user?.name ?? "",   // ← pre-filled from JWT
+      // email: user?.email ?? "",     // ← pre-filled from JWT
       platforms: [],
       featuresNeeded: [],
     },

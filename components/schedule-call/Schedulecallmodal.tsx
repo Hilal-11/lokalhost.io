@@ -19,32 +19,32 @@ interface Props {
 interface Props {
   scheduleCallOpen: boolean;
   setScheduleCallOpen: (v: boolean) => void;
-  state: {
-    isLoggedIn: boolean;
-    user: { name?: string; email?: string } | null;
-    loading: boolean;
-  };
+  // state: {
+  //   isLoggedIn: boolean;
+  //   user: { name?: string; email?: string } | null;
+  //   loading: boolean;
+  // };
 }
 
-export function ScheduleCallModal({ scheduleCallOpen, setScheduleCallOpen, state }: Props) {
+export function ScheduleCallModal({ scheduleCallOpen, setScheduleCallOpen }: Props) {
   const router = useRouter();
   const pathname = usePathname();
-  const handleOpen = () => {
-      if (state.loading) return;
+  // const handleOpen = () => {
+  //     if (state.loading) return;
 
-      if (!state.isLoggedIn) {
-        router.push(`/login?redirect=${encodeURIComponent(pathname)}`); // ← fixed
-        return;
-      }
-    };
+  //     if (!state.isLoggedIn) {
+  //       router.push(`/login?redirect=${encodeURIComponent(pathname)}`); // ← fixed
+  //       return;
+  //     }
+  //   };
 
   // Runs once when modal mounts — if somehow opened while logged out, redirect
-  useEffect(() => {
-    if (!state.loading && !state.isLoggedIn) {
-      setScheduleCallOpen(false);
-      router.push(`/login?redirect=${encodeURIComponent(pathname)}`); // ← fixed
-    }
-  }, [state.loading, state.isLoggedIn]);
+  // useEffect(() => {
+  //   if (!state.loading && !state.isLoggedIn) {
+  //     setScheduleCallOpen(false);
+  //     router.push(`/login?redirect=${encodeURIComponent(pathname)}`); // ← fixed
+  //   }
+  // }, [state.loading, state.isLoggedIn]);
   return (
     <AnimatePresence>
       {scheduleCallOpen && (
@@ -76,7 +76,7 @@ export function ScheduleCallModal({ scheduleCallOpen, setScheduleCallOpen, state
             </button>
 
             {/* Pass user so FormWrapper can pre-fill Step 1 */}
-            <FormWrapper user={state.user} />
+            <FormWrapper />
           </motion.div>
         </>
       )}

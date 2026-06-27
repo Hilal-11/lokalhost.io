@@ -1,5 +1,5 @@
 "use client";
-
+export const dynamic = 'force-dynamic'
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,7 +31,7 @@ interface Props {
   user?: { name?: string; email?: string } | null;
 }
 
-export function FormWrapper() {
+export function FormWrapper({ user }:Props) {
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -43,8 +43,8 @@ const saveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
     resolver: zodResolver(fullFormSchema),
     mode: "onChange",
     defaultValues: {
-      // fullName: user?.name ?? "",   // ← pre-filled from JWT
-      // email: user?.email ?? "",     // ← pre-filled from JWT
+      fullName: user?.name ?? "",   // ← pre-filled from JWT
+      email: user?.email ?? "",     // ← pre-filled from JWT
       platforms: [],
       featuresNeeded: [],
     },

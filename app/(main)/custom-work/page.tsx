@@ -8,7 +8,8 @@ import Link from 'next/link';
 import { motion , AnimatePresence} from "motion/react"
 import { ScheduleCallModal } from '@/components/schedule-call/Schedulecallmodal';
 import ScrollBasedVelocityImagesDemo from '@/components/landing/ScrollBasedOnVelocity';
-
+import { useUser } from "@/hooks/useUser";
+  
   const HEADLINES = [
     { pre: 'We Build ',   hi: 'UI Blocks & Components',    post: '\nfor web apps that impress.'         },
     { pre: 'We Craft ',   hi: 'Custom Mobile Apps',         post: '\nthat users actually love.'          },
@@ -92,7 +93,7 @@ import ScrollBasedVelocityImagesDemo from '@/components/landing/ScrollBasedOnVel
 
 function Page() {
 
-
+  const { user, loading } = useUser();
   const [scheduleCallOpen, setScheduleCallOpen] = useState(false)
   const [idx, setIdx] = useState(0)
   const [visible, setVisible] = useState(true)
@@ -132,10 +133,15 @@ function Page() {
               className="fixed inset-0 z-40 bg-white/30 dark:bg-black/50 backdrop-blur-xs"
               onClick={() => setScheduleCallOpen(false)}
             />
-            {/* <ScheduleCallModal
-              scheduleCallOpen={scheduleCallOpen}
-              setScheduleCallOpen={setScheduleCallOpen}
-            /> */}
+           <ScheduleCallModal
+            scheduleCallOpen={scheduleCallOpen}
+            setScheduleCallOpen={setScheduleCallOpen}
+            state={{
+              isLoggedIn: !!user,
+              user: user ? { name: user.user_metadata?.full_name, email: user.email } : null,
+              loading: false,
+            }}
+          />
           </>
         )}
       </AnimatePresence>
@@ -384,6 +390,8 @@ function FaqBlock({
 import React from "react";
 import { HiArrowRight, HiLightningBolt } from "react-icons/hi";
 import { StripedPattern } from "@/components/magicui/striped-pattern";
+import { createClient } from '@supabase/supabase-js';
+import { redirect } from 'next/navigation';
 // ─── Corner bracket decoration ────────────────────────────────────────────────
 function CornerBracket({ className = "" }: { className?: string }) {
   return (

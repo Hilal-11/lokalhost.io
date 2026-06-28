@@ -12,12 +12,8 @@ import { toast, Toaster } from 'sonner'
 import { MdLogout } from "react-icons/md"
 import { LuLayoutDashboard, LuUser } from "react-icons/lu"
 import { RiMoonLine } from "react-icons/ri"
-import type { User } from '@supabase/supabase-js'
 import { useUser } from '@/hooks/useUser'
 
-interface HeaderClientProps {
-  user: User
-}
 
 function HeaderProfile() {
   const { user, loading }           = useUser()

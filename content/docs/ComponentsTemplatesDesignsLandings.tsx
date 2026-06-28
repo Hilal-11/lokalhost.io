@@ -5,7 +5,7 @@ import ComponentsList from './componentsAll'
 import TemplatesBlockList from './templatesAll'
 
 // ── Types ──────────────────────────────────────────────────────────────────
-type Filter = 'Components' | 'Templates' | 'Landings' | 'Blocks' | 'Designs' | "Mobile UI Elements" | "Mobile Apps" | "Custom-work"
+type Filter = 'Components' | 'Templates' | 'Landings' | 'Blocks' | 'Designs' | 'Mobile UI Elements' | 'Mobile Apps' | 'Custom-work'
 
 const FILTERS: Filter[] = ['Components', 'Templates', 'Landings', 'Blocks', 'Designs', 'Mobile UI Elements', 'Mobile Apps', 'Custom-work']
 
@@ -66,7 +66,7 @@ export default function ComponentsTemplatesDesignsLandings() {
           {active === 'Designs'  && <DesignsPlaceholder />}
           {active === 'Mobile UI Elements'  && <DesignsPlaceholder />}
           {active === 'Mobile Apps'  && <DesignsPlaceholder />}
-          {active === 'Custom work'  && <DesignsPlaceholder />}
+          {active === 'Custom-work'  && <DesignsPlaceholder />}
         </main>
 
       </div>

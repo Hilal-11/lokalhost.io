@@ -388,10 +388,8 @@ function FaqBlock({
 
 
 import React from "react";
-import { HiArrowRight, HiLightningBolt } from "react-icons/hi";
+import { HiLightningBolt } from "react-icons/hi";
 import { StripedPattern } from "@/components/magicui/striped-pattern";
-import { createClient } from '@supabase/supabase-js';
-import { redirect } from 'next/navigation';
 // ─── Corner bracket decoration ────────────────────────────────────────────────
 function CornerBracket({ className = "" }: { className?: string }) {
   return (

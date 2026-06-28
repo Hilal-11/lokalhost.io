@@ -23,39 +23,16 @@ import Feedback from "@/components/landing/MicroComponents/Feedback";
 import { SearchingMain } from '../components/landing/MicroComponents/Searching';
 import headerPagesConfig from "@/public/config/HeaderPages.json"
 import { HiArrowNarrowRight } from "react-icons/hi";
-import { SoonV1 , ComingSoon , SoonV2, SoonV3 } from "@/components/landing/MicroComponents/ComingSoon";
-import { createClient } from '@/lib/supabase/client'
-import type { User } from '@supabase/supabase-js'
+import {  SoonV3 } from "@/components/landing/MicroComponents/ComingSoon";
+import { useUser } from '@/hooks/useUser'
 
-interface HeaderProfileProps {
-  user: User
-  userEmail: string
-}
+
 function Header() {
-  const supabase = createClient()
-  const [user, setUser] = useState<User | null>(null)
-
-
+  const { user, loading } = useUser()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showservices, setShowServices] = useState(true)
-
-  const [userName, setUserName] = useState("");
-  const [userEmail2, setUserEmail2] = useState("");
   const [showFeedback, setShowFeedback] = useState(false)
   const feedbackRef = useRef<HTMLDivElement | null>(null);
-
-
-  useEffect(() => {
-    // get initial session
-    supabase.auth.getUser().then(({ data }) => setUser(data.user))
-
-    // listen for login/logout changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
 
 
   

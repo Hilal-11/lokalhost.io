@@ -12,7 +12,6 @@ import { toast, Toaster } from 'sonner'
 import { MdLogout } from "react-icons/md"
 import { LuLayoutDashboard, LuUser } from "react-icons/lu"
 import { RiMoonLine } from "react-icons/ri"
-import { createClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
 import { useUser } from '@/hooks/useUser'
 
@@ -30,22 +29,11 @@ function HeaderProfile() {
   const initials    = displayName.slice(0, 2).toUpperCase() || '?'
   const email       = user?.email ?? ''
 
-  const handleLogout = async () => {
-    setLoggingOut(true)
-    try {
-      const supabase = createClient()
-      const { error } = await supabase.auth.signOut()
-      if (!error) {
-        window.location.href = '/'
-      } else {
-        toast.error('Logout failed')
-        setLoggingOut(false)
-      }
-    } catch {
-      toast.error('Logout failed')
-      setLoggingOut(false)
-    }
-  }
+const handleLogout = async () => {
+  const { createClient } = await import('@/lib/supabase/client')
+  const supabase = createClient()
+  await supabase.auth.signOut()
+}
 
   return (
     <div className="flex items-center">

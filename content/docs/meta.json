@@ -7,8 +7,6 @@
     "pages": [
         "index",
         "cli",
-         "---Templates---",
-        "/components/templates/templates",
         
         "---AI Landing---",
         "/components/landing/ai-hero-section",

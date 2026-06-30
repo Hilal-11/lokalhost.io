@@ -871,7 +871,7 @@ function ProductDetailView({ product, section, onBack }: { product: Product; sec
                 />
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-3 ">
                 {/* Main image */}
                 <div className="rounded-2xl shadow-lg ring-1 ring-black/5 dark:ring-white/10 bg-neutral-100 dark:bg-neutral-900 flex items-end justify-center min-h-[300px] max-h-[780px] pt-5 px-5">
                   <img
@@ -881,12 +881,12 @@ function ProductDetailView({ product, section, onBack }: { product: Product; sec
                   />
                 </div>
                 {/* Thumbnails */}
-                <div className="flex items-center justify-center gap-2 overflow-x-auto pb-1 scrollbar-hide mt-2">
+                <div className="flex items-center justify-center gap-2 overflow-x-auto p-6 scrollbar-hide">
                   {images.map((img, i) => (
                     <button
                       key={i}
                       onClick={() => setSelectedImage(i)}
-                      className={`flex-shrink-0 w-14 h-24 rounded-xl transition-all duration-200 bg-neutral-100 dark:bg-neutral-800 flex items-end justify-center pt-1.5 px-1.5 ${
+                      className={`flex-shrink-0 w-18 h-16 rounded-sm transition-all duration-200 bg-neutral-100 dark:bg-neutral-800 flex items-end justify-center pt-1.5 px-1.5 ${
                         i === selectedImage
                           ? "ring-2 ring-neutral-900 dark:ring-neutral-100 shadow-md scale-105"
                           : "ring-1 ring-neutral-200 dark:ring-neutral-700 opacity-50 hover:opacity-90 hover:shadow-sm"

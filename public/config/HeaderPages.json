@@ -5,12 +5,12 @@
             "link": "/docs"
         },
         {
-            "page": "Templates",
+            "page": "Web Templates",
             "link": "/templates"
         },
         {
-            "page": "Figma Designs",
-            "link": "/designs"
+            "page": "Mobile Ecosystem",
+            "link": "/mobile"
         },
 
         {
@@ -24,7 +24,7 @@
             "page": "Pricing",
             "link": "/pricing"
         },
-         {
+        {
             "page": "Blogs",
             "link": "/blogs"
         }

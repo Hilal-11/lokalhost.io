@@ -1,4 +1,4 @@
-import { component as registry } from "../registry/component"; // <-- adjust to your real path/export name
+import { registry } from "../registry"; // <-- adjust to your real path/export name
 import { promises as fs } from "fs";
 import type { z } from "zod";
 import type { registryItemFileSchema } from "@/registry/schema";

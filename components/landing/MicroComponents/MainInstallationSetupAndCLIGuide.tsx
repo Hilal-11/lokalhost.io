@@ -501,7 +501,7 @@ function ComponentsPreview() {
 
   return (
     <>
-      <div className="w-full h-[44px] shrink-0 bg-neutral-100 dark:bg-neutral-900 border-b flex items-center justify-between px-4">
+      <div className="relative w-full h-[44px] shrink-0 bg-neutral-100 dark:bg-neutral-900 border-b flex items-center justify-between px-4">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-red-400" />
           <span className="w-2 h-2 rounded-full bg-yellow-400" />
@@ -517,7 +517,7 @@ function ComponentsPreview() {
           {copied ? <IoIosDoneAll className="text-emerald-500" /> : <FiCopy />}
         </button>
       </div>
-      <pre className="flex-1 overflow-auto p-4 text-[12.5px] leading-6 font-mono text-neutral-600 dark:text-neutral-400 whitespace-pre">
+      <pre className="flex-1 overflow-auto p-4 text-[12.5px] leading-6 font-mono text-neutral-600 dark:text-neutral-400 whitespace-pre text-left">
 {CLI_CODE}
       </pre>
     </>

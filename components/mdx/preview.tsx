@@ -38,16 +38,17 @@ interface PreviewProps {
 type PackageManager = "npx" | "pnpm" | "yarn" | "bun";
 type AITool = "claude" | "v0" | "lovable" | "cursor";
 
-const prePath = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+const prePath = process.env.NEXT_PUBLIC_BASE_URL
+  ? `https://${process.env.NEXT_PUBLIC_BASE_URL}`
   : "http://localhost:3000";
 
 const packageCommands: Record<PackageManager, (slug: string) => string> = {
-  npx:  (slug) => `npx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/r/${slug}`,
-  pnpm: (slug) => `pnpm dlx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/r/${slug}`,
-  yarn: (slug) => `yarn dlx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/r/${slug}`,
-  bun:  (slug) => `bunx --bun shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/r/${slug}`,
+  npx:  (slug) => `npx shadcn@latest add ${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000"}/r/${slug}`,
+  pnpm: (slug) => `pnpm dlx shadcn@latest add ${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000"}/r/${slug}`,
+  yarn: (slug) => `yarn dlx shadcn@latest add ${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000"}/r/${slug}`,
+  bun:  (slug) => `bunx --bun shadcn@latest add ${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000"}/r/${slug}`,
 };
+
 
 
 const pmIcons: Record<PackageManager, React.ReactNode> = {
@@ -73,13 +74,13 @@ const pmLabels: Record<PackageManager, string> = {
 
 const aiPrompts: Record<AITool, (slug: string) => string> = {
   claude: (slug) =>
-    `Install and use the ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug} component from the shadcn registry: npx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug}`,
+    `Install and use the ${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000"}/${slug} component from the shadcn registry: npx shadcn@latest add ${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000"}/${slug}`,
   v0: (slug) =>
-    `Use the ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug} shadcn component. Install with: npx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug}`,
+    `Use the ${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000"}/${slug} shadcn component. Install with: npx shadcn@latest add ${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000"}/${slug}`,
   lovable: (slug) =>
-    `Add the ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug} component using: npx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug}`,
+    `Add the ${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000"}/${slug} component using: npx shadcn@latest add ${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000"}/${slug}`,
   cursor: (slug) =>
-    `Install ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug}: npx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug}`,
+    `Install ${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000"}/${slug}: npx shadcn@latest add ${process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000"}/${slug}`,
 };
 
 const AIIcons: Record<AITool, React.ReactNode> = {

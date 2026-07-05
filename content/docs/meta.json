@@ -8,6 +8,11 @@
         "index",
         "cli",
         
+
+        
+        "---Buttons---",
+        "/components/buttons/download-button",
+
         "---AI Landing---",
         "/components/landing/ai-hero-section",
         "/components/landing/demo-chat-window",
@@ -18,6 +23,7 @@
         "/components/landing/testimonial-chat-bubble",
         "/components/landing/waitlist-form",
         "/components/landing/enterprise-cta",
+
 
         "---Chat & Messaging---",
         "/components/chat/chat-window",

@@ -2,19 +2,59 @@
 "use client"
 import React from 'react'
 import { cn } from "@/lib/utils";
+import { FaApple } from "react-icons/fa";
+import { DiWindows } from "react-icons/di";
+import { FcLinux } from "react-icons/fc";
+import DownloadButtonGroup from "@/components/lokalhost_io/buttons/download-button";
+import Link from 'next/link';
 
 // ─── Individual skeleton placeholders — each hints at a different component ───
 
-const SkeletonCard = () => (
-  <div className="flex flex-col gap-2.5 w-full px-4">
-    <div className="h-2 w-1/3 rounded-full bg-neutral-200 dark:bg-neutral-800" />
-    <div className="h-24 w-full rounded-lg bg-neutral-100 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-800" />
-    <div className="flex gap-2">
-      <div className="h-2 flex-1 rounded-full bg-neutral-200 dark:bg-neutral-800" />
-      <div className="h-2 w-1/3 rounded-full bg-neutral-100 dark:bg-neutral-800/40" />
-    </div>
+const DownloadButton = () => (
+  <div className="flex flex-col gap-2.5 w-full px-4 justify-center items-center">
+    <DownloadButtonGroup
+      config={{
+                windows: { downloadUrl: ""},
+              }}
+                            buttonProps={{
+                              label: "Download For Windows",
+                              icon: <DiWindows size={20} />,
+                              iconPosition: "right",
+                            }}
+                            size="md"
+      platforms={['windows']}
+    /> 
+    <DownloadButtonGroup
+    config={{
+                linux: { downloadUrl: ""},
+              }}
+                            buttonProps={{
+                              label: "Download For Linux",
+                              icon: <FcLinux size={20} />,
+                              iconPosition: "right",
+                            }}
+                            wrapperColorClassName="bg-blue-400"
+                            colorClassName="bg-blue-500"
+                            size="md"
+    platforms={['linux']}
+  /> 
+  <DownloadButtonGroup
+              config={{
+                              mac: { downloadUrl: ""},
+                            }}
+                            buttonProps={{
+                              label: "Download For Mac",
+                              icon: <FaApple size={20} />,
+                              iconPosition: "right",
+                            }}
+                            wrapperColorClassName="bg-yellow-400"
+                            colorClassName="bg-yellow-500"
+                            size="md"
+              platforms={['mac']}
+            />
   </div>
 );
+
 
 const SkeletonButton = () => (
   <div className="flex flex-col gap-3 items-center w-full px-4">
@@ -219,18 +259,18 @@ const SkeletonInput = () => (
 
 // ─── Skeleton map ─────────────────────────────────────────────────────────────
 const SKELETONS = [
-  { component: SkeletonCard,    label: "Card"      },
-  { component: SkeletonButton,  label: "Button"    },
-  { component: SkeletonChart,   label: "Chart"     },
-  { component: SkeletonForm,    label: "Form"      },
-  { component: SkeletonTable,   label: "Table"     },
-  { component: SkeletonModal,   label: "Modal"     },
-  { component: SkeletonNavbar,  label: "Navbar"    },
-  { component: SkeletonBadge,   label: "Badge"     },
-  { component: SkeletonToast,   label: "Toast"     },
-  { component: SkeletonPricing, label: "Pricing"   },
-  { component: SkeletonAvatar,  label: "Avatar"    },
-  { component: SkeletonInput,   label: "Input"     },
+  { component: DownloadButton,    label: "Download Button", link: "docs/components/buttons/download-button"     },
+  { component: SkeletonButton,  label: "Button" , link: "/"   },
+  { component: SkeletonChart,   label: "Chart" , link: "/"    },
+  { component: SkeletonForm,    label: "Form" , link: "/"     },
+  { component: SkeletonTable,   label: "Table" , link: "/"    },
+  { component: SkeletonModal,   label: "Modal" , link: "/"    },
+  { component: SkeletonNavbar,  label: "Navbar" , link: "/"   },
+  { component: SkeletonBadge,   label: "Badge" , link: "/"    },
+  { component: SkeletonToast,   label: "Toast" , link: "/"    },
+  { component: SkeletonPricing, label: "Pricing", link: "/"   },
+  { component: SkeletonAvatar,  label: "Avatar", link: "/"    },
+  { component: SkeletonInput,   label: "Input" , link: "/"    },
 ];
 
 // ─── Main component ───────────────────────────────────────────────────────────
@@ -241,64 +281,33 @@ function ComponentsList() {
 
         {/* ── Grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 py-5 gap-5">
-          {SKELETONS.map(({ component: Skeleton, label }, index) => (
+          {SKELETONS.map(({ component: Skeleton, label, link }, index) => (
+            <Link key={index} href={link} className="no-underline">
             <div
               key={index}
               className={cn(
-                "group relative w-full lg:h-[260px] h-[250px] rounded-xl",
+                "cursor-pointer group relative w-full lg:h-[260px] h-[250px] rounded-xl",
                 "bg-white dark:bg-neutral-950",
                 "border border-neutral-200 dark:border-neutral-800",
                 "shadow-[0_1px_3px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.04)]",
                 "dark:shadow-[0_1px_3px_rgba(0,0,0,0.3)]",
                 "overflow-hidden flex flex-col",
-                "transition-all duration-300",
-                "hover:shadow-[0_4px_16px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.04)]",
-                "dark:hover:shadow-[0_4px_16px_rgba(0,0,0,0.5)]",
-                "hover:border-neutral-300 dark:hover:border-neutral-700",
-                "hover:-translate-y-0.5"
+                "hover:border-neutral-300 dark:hover:border-neutral-700"
               )}
             >
               {/* skeleton preview area */}
               <div className="flex-1 flex items-center justify-center overflow-hidden relative">
                 {/* subtle inner bg texture */}
-                <div
-                  className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03] pointer-events-none"
-                  style={{
-                    backgroundImage: "radial-gradient(circle, rgba(0,0,0,1) 1px, transparent 1px)",
-                    backgroundSize: "16px 16px",
-                  }}
-                />
                 <Skeleton />
-
-                {/* Coming Soon overlay — appears on hover */}
-                <div className={cn(
-                  "absolute inset-0 flex flex-col items-center justify-center gap-2",
-                  "bg-white/80 dark:bg-neutral-950/85 backdrop-blur-[2px]",
-                  "opacity-0 group-hover:opacity-100",
-                  "transition-all duration-300"
-                )}>
-                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 shadow-md">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-neutral-600 dark:text-neutral-400">
-                      Coming Soon
-                    </span>
-                  </div>
-                </div>
               </div>
-
               {/* Label footer */}
-              <div className="shrink-0 h-[44px] px-4 border-t border-neutral-100 dark:border-neutral-800/80 bg-neutral-50 dark:bg-neutral-900/50 flex items-center justify-between">
-                <span className="text-xs font-mono font-semibold text-neutral-500 dark:text-neutral-500">
+              <div className="shrink-0 h-[44px] px-4 border-t border-neutral-100 dark:border-neutral-800/80 bg-neutral-100 dark:bg-neutral-950 flex items-center justify-between">
+                <span className="text-sm font-sans font-semibold text-neutral-500 dark:text-neutral-500 no-underline">
                   {label}
                 </span>
-                <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50">
-                  <span className="w-1 h-1 rounded-full bg-amber-400" />
-                  <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-amber-600 dark:text-amber-500">
-                    Soon
-                  </span>
-                </div>
               </div>
             </div>
+            </Link>
           ))}
         </div>
       </div>

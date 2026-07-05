@@ -21,15 +21,16 @@ export default async function Page(props: {
     const MDX = page.data.body;
 
     return (
-        <div className="min-h-screen bg-white dark:bg-black">
+        <div className="min-h-screen bg-white dark:bg-black pb-20 xl:px-10 lg:px-10">
             <DocsPage
                 toc={page.data.toc}
                 full={page.data.full}
                 container={{
-                className: "max-w-none lg:px-20",
+                className: "max-w-none",
                 }}
                 tableOfContent={{ enabled: false }}
                 tableOfContentPopover={{ enabled: false }}
+                footer={{ enabled: false }}
             >
                 <DocsTitle>{page.data.title}</DocsTitle>
                 <DocsDescription>{page.data.description}</DocsDescription>

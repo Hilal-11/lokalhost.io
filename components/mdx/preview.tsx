@@ -43,11 +43,12 @@ const prePath = process.env.VERCEL_PROJECT_PRODUCTION_URL
   : "http://localhost:3000";
 
 const packageCommands: Record<PackageManager, (slug: string) => string> = {
-  npx:  (slug) => `npx shadcn@latest add @lokalhost/${slug}`,
-  pnpm: (slug) => `pnpm dlx shadcn@latest add @lokalhost/${slug}`,
-  yarn: (slug) => `yarn dlx shadcn@latest add @lokalhost/${slug}`,
-  bun:  (slug) => `bunx --bun shadcn@latest add @lokalhost/${slug}`,
+  npx:  (slug) => `npx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/r/${slug}`,
+  pnpm: (slug) => `pnpm dlx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/r/${slug}`,
+  yarn: (slug) => `yarn dlx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/r/${slug}`,
+  bun:  (slug) => `bunx --bun shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/r/${slug}`,
 };
+
 
 const pmIcons: Record<PackageManager, React.ReactNode> = {
   npx:  <SiNpm size={14} />,
@@ -72,13 +73,13 @@ const pmLabels: Record<PackageManager, string> = {
 
 const aiPrompts: Record<AITool, (slug: string) => string> = {
   claude: (slug) =>
-    `Install and use the @lokalhost/${slug} component from the shadcn registry: npx shadcn@latest add @lokalhost/${slug}`,
+    `Install and use the ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug} component from the shadcn registry: npx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug}`,
   v0: (slug) =>
-    `Use the @lokalhost/${slug} shadcn component. Install with: npx shadcn@latest add @lokalhost/${slug}`,
+    `Use the ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug} shadcn component. Install with: npx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug}`,
   lovable: (slug) =>
-    `Add the @lokalhost/${slug} component using: npx shadcn@latest add @lokalhost/${slug}`,
+    `Add the ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug} component using: npx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug}`,
   cursor: (slug) =>
-    `Install @lokalhost/${slug}: npx shadcn@latest add @lokalhost/${slug}`,
+    `Install ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug}: npx shadcn@latest add ${process.env.VERCEL_PROJECT_PRODUCTION_URL ? process.env.VERCEL_PROJECT_PRODUCTION_URL : "http://localhost:3000"}/${slug}`,
 };
 
 const AIIcons: Record<AITool, React.ReactNode> = {
@@ -419,7 +420,7 @@ export function Preview({
               {code ? (
                 <>
                   <div className="absolute top-2 right-5 z-10 flex gap-px items-center justify-center border bg-white dark:bg-black rounded-[9px] px-2">
-                    <span className="font-mono font-medium text-[royalblue] text-[13px]">Typescript</span><span><CopyButton text={code} /></span>
+                    <span><CopyButton text={code} /></span>
                   </div>
                   <Suspense fallback={
                     <pre className="overflow-x-auto px-2 text-[15px] leading-relaxed font-mono font-medium text-foreground max-h-[500px] overflow-y-auto">

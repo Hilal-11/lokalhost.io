@@ -1,0 +1,52 @@
+---
+title: Install Command
+description: Install command of Lokalhost.io AI SDK
+icon: " "
+---
+### Component Preview - Preview
+import InstallCommand from "@/components/lokalhost_io/micro-ai-components/install-command";
+
+<Preview link="micro-ai-components/install-command" isBlock={true} language="tsx" code={`
+<InstallCommand
+    title="Terminal"
+    commands={{
+        pnpm: "pnpm dlx shadcn@latest add https://lokalhost-io-i2di.vercel.app",
+        npm: "npx shadcn@latest add https://lokalhost-io-i2di.vercel.app",
+        yarn: "yarn dlx shadcn@latest add https://lokalhost-io-i2di.vercel.app",
+        bun: "bunx --bun shadcn@latest add https://lokalhost-io-i2di.vercel.app",
+    }}
+/>
+`}>
+    <div className="relative w-auto lg:w-[600px] mx-auto">
+    <InstallCommand
+       title="Terminal"
+       commands={{
+         pnpm: "pnpm dlx shadcn@latest add https://lokalhost-io-i2di.vercel.app",
+         npm: "npx shadcn@latest add https://lokalhost-io-i2di.vercel.app",
+         yarn: "yarn dlx shadcn@latest add https://lokalhost-io-i2di.vercel.app",
+         bun: "bunx --bun shadcn@latest add https://lokalhost-io-i2di.vercel.app",
+       }}
+     />
+     </div>
+</Preview>
+
+### Manual Installation 
+import ManualInstallation from "@/components/mdx/manual-installation";
+
+<ManualInstallation
+  dependencies="clsx tailwind-merge react-icons shaki"
+  utilsCode={`import { ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}`}
+  componentFileName="components/lokalhost_io/micro-ai-components/install-command.tsx"
+  componentCode={``}
+/>
+
+### Props
+import PropsTable from "@/components/mdx/props-table";
+import {installCommandProps} from "./install-command-props";
+
+<PropsTable rows={installCommandProps} />

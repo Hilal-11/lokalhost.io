@@ -17,6 +17,8 @@
         "/components/code-blocks/component-preview",
         "/components/code-blocks/code-block",
 
+        "---AI Micro Components---",
+        "/components/micro-ai-components/install-command",
 
         "---AI Landing---",
         "/components/landing/ai-hero-section",

@@ -8,7 +8,9 @@ import { FcLinux } from "react-icons/fc";
 import DownloadButtonGroup from "@/components/lokalhost_io/buttons/download-button";
 import Link from 'next/link';
 import { ComponentPreview } from '@/components/lokalhost_io/code-blocks/component-preview';
+import InstallCommand from "@/components/lokalhost_io/micro-ai-components/install-command";
 import CodeBlock from "@/components/lokalhost_io/code-blocks/code-block";
+import Image from 'next/image';
 
 const DownloadButton = () => (
   <div className="flex flex-col gap-2.5 w-full px-4 justify-center items-center">
@@ -57,93 +59,30 @@ const DownloadButton = () => (
 
 
 const CodePreviewComponent = () => (
-  <div className="flex justify-center items-center p-10">
-  <ComponentPreview
-          code={` function InstallDropdown({ slug }: { slug: string }) {
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<PackageManager>("npx");
-  const [copied, setCopied] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-        
-  useEffect(() => {
-    function handleOutside(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    }
-    document.addEventListener("mousedown", handleOutside);
-    return () => document.removeEventListener("mousedown", handleOutside);
-  }, []);
-        
-  const command = packageCommands[selected](slug);
-        
-  const handleCopy = async () => {
-    if (copied) return;
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(command);
-      } else {
-        const el = document.createElement("textarea");
-        el.value = command;
-        el.style.cssText = "position:absolute;left:-9999px;top:-9999px";
-        document.body.appendChild(el);
-        el.focus();
-        el.select();
-        document.execCommand("copy");
-        document.body.removeChild(el);
-      }
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    } catch (err) {
-      console.error("Copy failed:", err);
-    }
-  };`}
-          language="tsx"
-          frameClassName="bg-neutral-100 dark:bg-neutral-900"
-          lightTheme="catppuccin-latte"
-          darkTheme="tokyo-night"
-          maxCodeHeight={400}
-          showLineNumbers={true}
-        >
-  </ComponentPreview>
+  <div className="flex w-full h-full justify-center items-center overflow-hidden pt-6 relative">
+    <Image className="object-cover rounded-lg" src="/components-images/component-preview-a.png" alt="Code block preview showing syntax highlighted TypeScript" width={500} height={400} />
+    <Image className="absolute top-16 left-46 rounded-lg" src="/components-images/component-preview-b.png" alt="Code block preview showing syntax highlighted TypeScript" width={400} height={400} />
   </div>
 );
 
 const CodeBlockComponent = () => (
-  <div className="flex flex-col gap-2 w-full px-4">
-    <CodeBlock
-        code={`import { z } from 'zod';
-import { createMcpHandler } from 'mcp-handler';
- 
-const handler = createMcpHandler(
-  (server) => {
-    server.tool(
-      'roll_dice',
-      'Rolls an N-sided die',
-      { sides: z.number().int().min(2) },
-      async ({ sides }) => {
-        const value = 1 + Math.floor(Math.random() * sides);
-        return {
-          content: [{ type: 'text', text: \`🎲 You rolled a ${10}!\` }],
-        };
-      },
-    );
-  },
-  {},
-  { basePath: '/api' },
-);`}
-        fileName="app/api/mcp/route.ts"
-        language="ts"
-        showLineNumbers
-      />
+  <div className="flex w-full h-full justify-center items-center overflow-hidden relative">
+    <Image className="object-cover rounded-lg" src="/components-images/code-block-a.png" alt="Code block preview showing syntax highlighted TypeScript" width={500} height={400} />
+    <Image className="absolute top-16 left-46 rounded-lg" src="/components-images/code-block-b.png" alt="Code block preview showing syntax highlighted TypeScript" width={400} height={400} />
   </div>
 );
 
-const SkeletonForm = () => (
+const InstallCommandComponent = () => (
   <div className="flex flex-col gap-2.5 w-full px-4">
-    <div className="h-1.5 w-1/4 rounded-full bg-neutral-300 dark:bg-neutral-700" />
-    <div className="h-8 w-full rounded-md bg-neutral-100 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-800" />
-    <div className="h-1.5 w-1/3 rounded-full bg-neutral-300 dark:bg-neutral-700 mt-1" />
-    <div className="h-8 w-full rounded-md bg-neutral-100 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-800" />
-    <div className="h-7 w-full rounded-md bg-neutral-800 dark:bg-neutral-700 mt-1" />
+     <InstallCommand
+       title="Terminal"
+       commands={{
+         pnpm: "pnpm dlx shadcn@latest add https://lokalhost-io-i2di.vercel.app",
+         npm: "npx shadcn@latest add https://lokalhost-io-i2di.vercel.app",
+         yarn: "yarn dlx shadcn@latest add https://lokalhost-io-i2di.vercel.app",
+         bun: "bunx --bun shadcn@latest add https://lokalhost-io-i2di.vercel.app",
+       }}
+     />
   </div>
 );
 
@@ -305,7 +244,7 @@ const SKELETONS = [
   { component: DownloadButton,    label: "Download Button", link: "docs/components/buttons/download-button"     },
   { component: CodePreviewComponent,  label: "Code Preview" , link: "docs/components/code-blocks/component-preview"   },
   { component: CodeBlockComponent,   label: "Code-Block" , link: "docs/components/code-blocks/code-block"    },
-  { component: SkeletonForm,    label: "Form" , link: "/"     },
+  { component: InstallCommandComponent,    label: "Install Command" , link: "docs/components/micro-ai-components/install-command"     },
   { component: SkeletonTable,   label: "Table" , link: "/"    },
   { component: SkeletonModal,   label: "Modal" , link: "/"    },
   { component: SkeletonNavbar,  label: "Navbar" , link: "/"   },
@@ -329,7 +268,7 @@ function ComponentsList() {
             <div
               key={index}
               className={cn(
-                "cursor-pointer group relative w-full lg:h-[260px] h-[250px] rounded-xl",
+                "cursor-pointer group relative w-full lg:h-[320px] h-[320px] rounded-xl",
                 "bg-white dark:bg-neutral-950",
                 "border border-neutral-200 dark:border-neutral-800",
                 "shadow-[0_1px_3px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.04)]",

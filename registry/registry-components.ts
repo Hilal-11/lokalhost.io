@@ -13,4 +13,28 @@ export const component: Registry = [
             },
         ],
     },
+    {
+        name: "code-preview-block",
+        type: "registry:component",
+        dependencies: [],
+        registryDependencies: [],
+        files: [
+            {
+                path: "components/lokalhost_io/code-blocks/component-preview.tsx",
+                type: "registry:component",
+            },
+        ],
+    },
+    {
+        name: "code-preview-block",
+        type: "registry:component",
+        dependencies: [],
+        registryDependencies: [],
+        files: [
+            {
+                path: "components/lokalhost_io/code-blocks/code-block.tsx",
+                type: "registry:component",
+            },
+        ],
+    },
 ];

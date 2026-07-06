@@ -13,6 +13,11 @@
         "---Buttons---",
         "/components/buttons/download-button",
 
+        "---Code Blocks---",
+        "/components/code-blocks/component-preview",
+        "/components/code-blocks/code-block",
+
+
         "---AI Landing---",
         "/components/landing/ai-hero-section",
         "/components/landing/demo-chat-window",

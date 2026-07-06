@@ -7,8 +7,8 @@ import { DiWindows } from "react-icons/di";
 import { FcLinux } from "react-icons/fc";
 import DownloadButtonGroup from "@/components/lokalhost_io/buttons/download-button";
 import Link from 'next/link';
-
-// ─── Individual skeleton placeholders — each hints at a different component ───
+import { ComponentPreview } from '@/components/lokalhost_io/code-blocks/component-preview';
+import CodeBlock from "@/components/lokalhost_io/code-blocks/code-block";
 
 const DownloadButton = () => (
   <div className="flex flex-col gap-2.5 w-full px-4 justify-center items-center">
@@ -56,41 +56,84 @@ const DownloadButton = () => (
 );
 
 
-const SkeletonButton = () => (
-  <div className="flex flex-col gap-3 items-center w-full px-4">
-    <div className="h-2 w-1/2 rounded-full bg-neutral-200 dark:bg-neutral-800" />
-    <div className="flex gap-2 w-full justify-center">
-      <div className="h-9 w-28 rounded-lg bg-neutral-800 dark:bg-neutral-700" />
-      <div className="h-9 w-20 rounded-lg bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700" />
-    </div>
-    <div className="flex gap-1.5 justify-center">
-      <div className="h-7 w-7 rounded-full bg-neutral-200 dark:bg-neutral-800" />
-      <div className="h-7 w-7 rounded-full bg-neutral-200 dark:bg-neutral-800" />
-      <div className="h-7 w-7 rounded-full bg-neutral-800 dark:bg-neutral-700" />
-    </div>
+const CodePreviewComponent = () => (
+  <div className="flex justify-center items-center p-10">
+  <ComponentPreview
+          code={` function InstallDropdown({ slug }: { slug: string }) {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<PackageManager>("npx");
+  const [copied, setCopied] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+        
+  useEffect(() => {
+    function handleOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handleOutside);
+    return () => document.removeEventListener("mousedown", handleOutside);
+  }, []);
+        
+  const command = packageCommands[selected](slug);
+        
+  const handleCopy = async () => {
+    if (copied) return;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(command);
+      } else {
+        const el = document.createElement("textarea");
+        el.value = command;
+        el.style.cssText = "position:absolute;left:-9999px;top:-9999px";
+        document.body.appendChild(el);
+        el.focus();
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    } catch (err) {
+      console.error("Copy failed:", err);
+    }
+  };`}
+          language="tsx"
+          frameClassName="bg-neutral-100 dark:bg-neutral-900"
+          lightTheme="catppuccin-latte"
+          darkTheme="tokyo-night"
+          maxCodeHeight={400}
+          showLineNumbers={true}
+        >
+  </ComponentPreview>
   </div>
 );
 
-const SkeletonChart = () => (
+const CodeBlockComponent = () => (
   <div className="flex flex-col gap-2 w-full px-4">
-    <div className="h-2 w-1/4 rounded-full bg-neutral-200 dark:bg-neutral-800" />
-    <div className="flex items-end gap-1.5 h-20 w-full">
-      {[40, 65, 45, 80, 55, 70, 50, 90, 60, 75].map((h, i) => (
-        <div
-          key={i}
-          className={cn(
-            "flex-1 rounded-sm",
-            i === 7 ? "bg-neutral-700 dark:bg-neutral-500" : "bg-neutral-200 dark:bg-neutral-800"
-          )}
-          style={{ height: `${h}%` }}
-        />
-      ))}
-    </div>
-    <div className="flex justify-between">
-      {[...Array(5)].map((_, i) => (
-        <div key={i} className="h-1.5 w-4 rounded-full bg-neutral-100 dark:bg-neutral-800/40" />
-      ))}
-    </div>
+    <CodeBlock
+        code={`import { z } from 'zod';
+import { createMcpHandler } from 'mcp-handler';
+ 
+const handler = createMcpHandler(
+  (server) => {
+    server.tool(
+      'roll_dice',
+      'Rolls an N-sided die',
+      { sides: z.number().int().min(2) },
+      async ({ sides }) => {
+        const value = 1 + Math.floor(Math.random() * sides);
+        return {
+          content: [{ type: 'text', text: \`🎲 You rolled a ${10}!\` }],
+        };
+      },
+    );
+  },
+  {},
+  { basePath: '/api' },
+);`}
+        fileName="app/api/mcp/route.ts"
+        language="ts"
+        showLineNumbers
+      />
   </div>
 );
 
@@ -260,8 +303,8 @@ const SkeletonInput = () => (
 // ─── Skeleton map ─────────────────────────────────────────────────────────────
 const SKELETONS = [
   { component: DownloadButton,    label: "Download Button", link: "docs/components/buttons/download-button"     },
-  { component: SkeletonButton,  label: "Button" , link: "/"   },
-  { component: SkeletonChart,   label: "Chart" , link: "/"    },
+  { component: CodePreviewComponent,  label: "Code Preview" , link: "docs/components/code-blocks/component-preview"   },
+  { component: CodeBlockComponent,   label: "Code-Block" , link: "docs/components/code-blocks/code-block"    },
   { component: SkeletonForm,    label: "Form" , link: "/"     },
   { component: SkeletonTable,   label: "Table" , link: "/"    },
   { component: SkeletonModal,   label: "Modal" , link: "/"    },

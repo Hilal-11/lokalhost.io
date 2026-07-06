@@ -15,7 +15,6 @@ import { SiNpm, SiPnpm, SiYarn } from 'react-icons/si'
 import { PiCatBold } from "react-icons/pi";
 import { SiClaude } from "react-icons/si";
 import { TbCursorText } from "react-icons/tb";
-import { TbBrandVercel } from "react-icons/tb";
 import { TbBrandVercelFilled } from "react-icons/tb";
 import { GiWrappedHeart } from "react-icons/gi";
 import { HiOutlineTerminal } from "react-icons/hi";
@@ -211,6 +210,31 @@ function InstallDropdown({ slug }: { slug: string }) {
 }
 
 
+
+import { Sparkles } from "lucide-react";
+
+const TOOL_STYLES: Record<
+  AITool,
+  { chip: string; hoverRow: string }
+> = {
+  claude: {
+    chip: "bg-orange-100 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400",
+    hoverRow: "hover:bg-orange-50/70 dark:hover:bg-orange-500/[0.06]",
+  },
+  v0: {
+    chip: "bg-neutral-200 text-neutral-900 dark:bg-neutral-700 dark:text-neutral-100",
+    hoverRow: "hover:bg-neutral-100/80 dark:hover:bg-neutral-800/60",
+  },
+  lovable: {
+    chip: "bg-pink-100 text-pink-600 dark:bg-pink-500/10 dark:text-pink-400",
+    hoverRow: "hover:bg-pink-50/70 dark:hover:bg-pink-500/[0.06]",
+  },
+  cursor: {
+    chip: "bg-sky-100 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400",
+    hoverRow: "hover:bg-sky-50/70 dark:hover:bg-sky-500/[0.06]",
+  },
+};
+
 function AIPromptDropdown({ slug }: { slug: string }) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState<AITool | null>(null);
@@ -238,46 +262,104 @@ function AIPromptDropdown({ slug }: { slug: string }) {
   };
 
   return (
-    <div ref={ref} className="relative p-[3px] bg-neutral-200/60 dark:bg-neutral-800/60 rounded-[9px]">
+    <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(!open)}
         className={cn(
-          "flex items-center gap-1.5 h-7 px-3 rounded-[9px] border border-border text-[12px] font-medium transition-colors",
-          "text-muted-foreground hover:text-foreground bg-white dark:bg-neutral-950 hover:bg-muted text-nowrap whitespace-nowrap",
-          open && "bg-muted text-foreground"
+          "group flex items-center gap-1.5 h-8 px-3 rounded-lg border text-[12.5px] font-medium",
+          "transition-all duration-200 whitespace-nowrap",
+          "border-neutral-200 dark:border-neutral-800",
+          "bg-white dark:bg-neutral-950 shadow-sm hover:shadow",
+          "text-neutral-600 dark:text-neutral-400",
+          "hover:text-neutral-900 dark:hover:text-neutral-100",
+          "hover:border-neutral-300 dark:hover:border-neutral-700",
+          open &&
+            "bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 border-neutral-300 dark:border-neutral-700 shadow"
         )}
       >
+        <Sparkles
+          size={13}
+          className={cn(
+            "text-neutral-400 dark:text-neutral-500 transition-colors",
+            "group-hover:text-amber-500 dark:group-hover:text-amber-400",
+            open && "text-amber-500 dark:text-amber-400"
+          )}
+        />
         Copy prompt
         <ChevronDown
           size={12}
-          className={cn("transition-transform", open && "rotate-180")}
+          className={cn(
+            "transition-transform duration-200 text-neutral-400 dark:text-neutral-500",
+            open && "rotate-180"
+          )}
         />
       </button>
 
       {open && (
-        <div className="absolute top-full right-0 mt-1 z-50 min-w-[140px] rounded-lg border border-border bg-popover shadow-md overflow-hidden">
-          {(["claude", "v0", "lovable", "cursor"] as AITool[]).map((tool) => (
-            <button
-              key={tool}
-              onClick={() => copy(tool)}
-              className="w-full flex items-center justify-between gap-3 px-3 py-1 text-[14px] font-sans font-medium text-left transition-colors hover:bg-muted text-neutral-800 dark:text-neutral-200 hover:text-foreground"
-            >
-              <span className="flex items-center gap-2">
-                <span className="opacity-70">{AIIcons[tool]}</span>
-                {labels[tool]}
-              </span>
-              {copied === tool ? (
-                <Check size={11} strokeWidth={2.5} />
-              ) : (
-                <Copy size={11} className="opacity-40" />
-              )}
-            </button>
-          ))}
+        <div
+          className={cn(
+            "absolute top-full right-0 mt-2 z-50 min-w-[140px] px-px",
+            "rounded-lg border border-neutral-200/80 dark:border-neutral-800",
+            "bg-white/95 dark:bg-neutral-950/95 backdrop-blur-sm",
+            "shadow-lg shadow-black/5 dark:shadow-black/30",
+            "origin-top-right animate-in fade-in-0 zoom-in-95 duration-150"
+          )}
+        >
+          {(["claude", "v0", "lovable", "cursor"] as AITool[]).map((tool) => {
+            const style = TOOL_STYLES[tool];
+            const isCopied = copied === tool;
+
+            return (
+              <button
+                key={tool}
+                onClick={() => copy(tool)}
+                className={cn(
+                  "w-full flex items-center justify-between gap-3 px-2 py-[4.5px] rounded-lg",
+                  "text-[13px] font-sans font-medium text-left",
+                  "transition-colors duration-150",
+                  "text-neutral-700 dark:text-neutral-300",
+                  style.hoverRow
+                )}
+              >
+                <span className="flex items-center gap-2.5">
+                  <span
+                    className={cn(
+                      "flex h-6 w-6 items-center justify-center rounded-md shrink-0 transition-transform",
+                      style.chip
+                    )}
+                  >
+                    {AIIcons[tool]}
+                  </span>
+                  {labels[tool]}
+                </span>
+
+                <span className="relative flex h-3.5 w-3.5 items-center justify-center shrink-0">
+                  <Check
+                    size={13}
+                    strokeWidth={2.5}
+                    className={cn(
+                      "absolute text-emerald-500 transition-all duration-200",
+                      isCopied ? "scale-100 opacity-100" : "scale-50 opacity-0"
+                    )}
+                  />
+                  <Copy
+                    size={12}
+                    className={cn(
+                      "absolute text-neutral-400 dark:text-neutral-500 transition-all duration-200",
+                      isCopied ? "scale-50 opacity-0" : "scale-100 opacity-100"
+                    )}
+                  />
+                </span>
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
   );
 }
+
+
 
 export function Preview({
   children,
@@ -296,11 +378,11 @@ export function Preview({
   const slug = link.split("/").pop() ?? link;
 
   const inner = (
-    <div className="p-4 shadow-xs rounded-2xl border bg-neutral-100 dark:bg-neutral-900 relative overflow-hidden">
+    <div className="p-4 shadow-xs rounded-2xl border bg-neutral-100 dark:bg-neutral-900 relative overflow-hidden py-10">
       <div
         className={cn(
           "w-full rounded-2xl border bg-white dark:bg-black overflow-hidden",
-          fullscreen && "h-full flex flex-col",
+          fullscreen && "h-full flex flex-col py-10",
           className
         )}
       >
@@ -388,7 +470,7 @@ export function Preview({
         </div>
 
         {/* ── Content ── */}
-        <div className={cn("rounded-b-2xl w-full h-auto overflow-hidden relative z-50", fullscreen && "relative rounded-2xl flex-1 overflow-hidden")}>
+        <div className={cn("rounded-b-2xl w-full h-auto overflow-hidden relative z-50 py-10", fullscreen && "relative rounded-2xl flex-1 overflow-hidden py-10")}>
           {/* Preview tab */}
           {tab === "preview" && (
             <>
@@ -453,7 +535,7 @@ export function Preview({
           onClick={() => setFullscreen(false)}
         />
         {/* Fullscreen panel */}
-        <div className="fixed inset-4 z-50 rounded-2xl border border-border bg-background overflow-hidden shadow-2xl flex flex-col">
+        <div className="fixed inset-4 z-50 rounded-2xl border border-border bg-background overflow-hidden shadow-2xl flex flex-col py-10">
           {inner}
         </div>
       </>
@@ -461,7 +543,7 @@ export function Preview({
   }
 
   return (
-    <div className="my-6 not-prose">
+    <div className="my-6 not-prose py-10">
       {inner}
       {comment.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-4">

@@ -26,13 +26,25 @@ export const component: Registry = [
         ],
     },
     {
-        name: "code-preview-block",
+        name: "code-block",
         type: "registry:component",
         dependencies: [],
         registryDependencies: [],
         files: [
             {
                 path: "components/lokalhost_io/code-blocks/code-block.tsx",
+                type: "registry:component",
+            },
+        ],
+    },
+    {
+        name: "install-command",
+        type: "registry:component",
+        dependencies: [],
+        registryDependencies: [],
+        files: [
+            {
+                path: "components/lokalhost_io/micro-ai-components/install-command.tsx",
                 type: "registry:component",
             },
         ],

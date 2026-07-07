@@ -378,11 +378,11 @@ export function Preview({
   const slug = link.split("/").pop() ?? link;
 
   const inner = (
-    <div className="p-4 shadow-xs rounded-2xl border bg-neutral-100 dark:bg-neutral-900 relative overflow-hidden py-10">
+    <div className="p-4 shadow-xs rounded-2xl border bg-neutral-100 dark:bg-neutral-900 relative overflow-hidden">
       <div
         className={cn(
           "w-full rounded-2xl border bg-white dark:bg-black overflow-hidden",
-          fullscreen && "h-full flex flex-col py-10",
+          fullscreen && "h-full flex flex-col",
           className
         )}
       >
@@ -470,7 +470,7 @@ export function Preview({
         </div>
 
         {/* ── Content ── */}
-        <div className={cn("rounded-b-2xl w-full h-auto overflow-hidden relative z-50 py-10", fullscreen && "relative rounded-2xl flex-1 overflow-hidden py-10")}>
+        <div className={cn("rounded-b-2xl w-full h-auto overflow-hidden relative z-50", fullscreen && "relative rounded-2xl flex-1 overflow-hidden")}>
           {/* Preview tab */}
           {tab === "preview" && (
             <>

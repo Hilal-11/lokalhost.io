@@ -49,4 +49,16 @@ export const component: Registry = [
             },
         ],
     },
+    {
+        name: "Copy-page-markdown",
+        type: "registry:component",
+        dependencies: [],
+        registryDependencies: [],
+        files: [
+            {
+                path: "components/lokalhost_io/micro-ai-components/copy-page-markdown.tsx",
+                type: "registry:component",
+            },
+        ],
+    },
 ];

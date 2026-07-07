@@ -11,6 +11,8 @@ import { ComponentPreview } from '@/components/lokalhost_io/code-blocks/componen
 import InstallCommand from "@/components/lokalhost_io/micro-ai-components/install-command";
 import CodeBlock from "@/components/lokalhost_io/code-blocks/code-block";
 import Image from 'next/image';
+import { RiGrokAiFill } from 'react-icons/ri';
+import CopyPageMarkdown from '@/components/lokalhost_io/micro-ai-components/copy-page-markdown';
 
 const DownloadButton = () => (
   <div className="flex flex-col gap-2.5 w-full px-4 justify-center items-center">
@@ -86,21 +88,18 @@ const InstallCommandComponent = () => (
   </div>
 );
 
-const SkeletonTable = () => (
-  <div className="flex flex-col gap-0 w-full px-4 overflow-hidden">
-    <div className="flex gap-2 pb-2 border-b border-neutral-200 dark:border-neutral-800">
-      {[2, 3, 2].map((w, i) => (
-        <div key={i} className={`h-1.5 rounded-full bg-neutral-300 dark:bg-neutral-700 flex-${w}`} style={{ flex: w }} />
-      ))}
-    </div>
-    {[...Array(4)].map((_, i) => (
-      <div key={i} className="flex gap-2 py-2 border-b border-neutral-100 dark:border-neutral-800/50">
-        <div className="h-1.5 rounded-full bg-neutral-200 dark:bg-neutral-800" style={{ flex: 2 }} />
-        <div className="h-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800/40" style={{ flex: 3 }} />
-        <div className="h-5 w-12 rounded-full bg-neutral-200 dark:bg-neutral-800" style={{ flex: 2 }} />
-      </div>
-    ))}
-  </div>
+const CopyPageMarkdownsComponent = () => (
+    <CopyPageMarkdown
+      extraItems={[
+        {
+          id: "open-grok",
+          label: "Open in Grok",
+          icon: <RiGrokAiFill size={18} />,
+          external: true,
+          onSelect: () => window.open(`https://grok.com/...`, "_blank"),
+        },
+      ]}
+    />
 );
 
 const SkeletonModal = () => (
@@ -245,7 +244,7 @@ const SKELETONS = [
   { component: CodePreviewComponent,  label: "Code Preview" , link: "docs/components/code-blocks/component-preview"   },
   { component: CodeBlockComponent,   label: "Code-Block" , link: "docs/components/code-blocks/code-block"    },
   { component: InstallCommandComponent,    label: "Install Command" , link: "docs/components/micro-ai-components/install-command"     },
-  { component: SkeletonTable,   label: "Table" , link: "/"    },
+  { component: CopyPageMarkdownsComponent,   label: "Copy page markdown" , link: "docs/components/micro-ai-components/copy-page-markdown"    },
   { component: SkeletonModal,   label: "Modal" , link: "/"    },
   { component: SkeletonNavbar,  label: "Navbar" , link: "/"   },
   { component: SkeletonBadge,   label: "Badge" , link: "/"    },

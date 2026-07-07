@@ -6,9 +6,6 @@
     "defaultOpen": true,
     "pages": [
         "index",
-        "cli",
-        
-
         
         "---Buttons---",
         "/components/buttons/download-button",
@@ -19,6 +16,8 @@
 
         "---AI Micro Components---",
         "/components/micro-ai-components/install-command",
+        "/components/micro-ai-components/copy-page-markdown",
+
 
         "---AI Landing---",
         "/components/landing/ai-hero-section",

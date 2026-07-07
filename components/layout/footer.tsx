@@ -10,9 +10,10 @@ import footerConfig from "@/public/config/footerConfig.json"
 
 import {
   SiGithub,
-  SiLinkedin,
   SiInstagram,
 } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa";
+
 import { MdEmail, MdContactPage } from "react-icons/md";
 import { HiArrowRight, HiCheckCircle } from "react-icons/hi";
 
@@ -45,7 +46,7 @@ const SOCIAL_LINKS = [
   {
     label: "LinkedIn",
     href: "https://linkedin.com/in/hilal-ab5466347",
-    icon: SiLinkedin,
+    icon: FaLinkedin,
     title: "Connect on LinkedIn",
   },
   {

@@ -2,9 +2,9 @@ import { Dock, DockIcon } from "@/components/ui/dock"
 export type IconProps = React.HTMLAttributes<SVGElement>
 import {
   SiGithub,
-  SiLinkedin,
   SiInstagram,
 } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa";
 import { RiTwitterXLine } from "react-icons/ri";
 import { CiGlobe } from "react-icons/ci";
 export default function SocialDock() {
@@ -15,7 +15,7 @@ export default function SocialDock() {
           <SiGithub size={18}/>
         </DockIcon>
         <DockIcon className="bg-black/10 dark:bg-white/10">
-          <SiLinkedin size={18}/>
+          <FaLinkedin size={18}/>
         </DockIcon>
         <DockIcon className="bg-black/10 dark:bg-white/10">
           <SiInstagram size={18}/>
